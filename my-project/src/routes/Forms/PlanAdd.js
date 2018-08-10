@@ -9,10 +9,6 @@ import {
   Select,
   Divider,
   Slider,
-  // Icon,
-  // Popover,
-  // DatePicker,
-  // Mention,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import FooterToolbar from 'components/FooterToolbar';
@@ -21,8 +17,6 @@ import styles from './PlanAdd.less';
 import { Link } from 'dva/router';
 import { connect } from 'dva';
 const { Option } = Select;
-
-// import moment from 'moment';
 
 const disorderList = {
   0: '正常',
@@ -46,8 +40,9 @@ const dementiaList = {
   6: 'ⅣM',
 };
 
-@connect(({ plan, template, loading }) => ({
+@connect(({ plan, role, template, loading }) => ({
   plan,
+  role,
   template,
   submitting: loading.effects['form/submitAdvancedForm'],
 }))
@@ -55,7 +50,6 @@ const dementiaList = {
 export default class PlanAdd extends PureComponent {
   state = {
     width: '100%',
-    // suggestions: [],
     loading: false,
   };
 
@@ -64,10 +58,13 @@ export default class PlanAdd extends PureComponent {
     dispatch({
       type: 'template/fetch',
     });
+    dispatch({
+      type: 'role/fetch',
+    });    
   }
 
   render() {
-    const { form, dispatch, submitting, template } = this.props;
+    const { role, form, dispatch, submitting, template } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll } = form;
 
     // 計画作成者
@@ -76,11 +73,20 @@ export default class PlanAdd extends PureComponent {
     let certification = [];
     // 管理者
     let admin = [];
+    // 病名、合併症
+    let diseaseName = [];
+    // 運動時のリスク
+    let exerciseRisk = [];
+
+    role.data.list.map((item,) => {
+      planAuthor.push(<Option key={item._id}>{item.adminName}</Option>);
+      certification.push(<Option key={item._id}>{item.adminName}</Option>);
+      admin.push(<Option key={item._id}>{item.adminName}</Option>);
+    }); 
 
     if (typeof template !== 'undefined') {
-      pushDate("計画作成者");
-      pushDate("介護認定");
-      pushDate("管理者");
+      pushDate("病名、合併症");
+      pushDate("運動時のリスク");
     }
 
     function pushDate(value) {
@@ -88,32 +94,29 @@ export default class PlanAdd extends PureComponent {
       if (typeof list !== 'undefined' && list.length !== 0 ) {
         for (let i = 0; i < list.length; i += 1) {
           const name = list[i].project;
-          if (name === value && value === "計画作成者" ) {
+          if (name === value && value === "病名、合併症" ) {
             list[i].projectData.map((item,i) => {
-              planAuthor.push(<Option key={item}>{item}</Option>);
+              diseaseName.push(<Option key={item}>{item}</Option>);
             });
-          break;
+            break;
           }
-          if (name === value && value === "介護認定" ) {
+          if (name === value && value === "運動時のリスク" ) {
             list[i].projectData.map((item,i) => {
-              certification.push(<Option key={i}>{item}</Option>);
+              exerciseRisk.push(<Option key={item}>{item}</Option>);
             });
-          break;
-          }
-          if (name === value && value === "管理者" ) {
-            list[i].projectData.map((item,i) => {
-              admin.push(<Option key={i}>{item}</Option>);
-            });
-          break;
+            break;
           }
         }
       }
     }
 
+    function handleChange(value) {
+      console.log(`selected ${value}`);
+    }
+    
     const validate = () => {
       validateFieldsAndScroll((error, values) => {
         if (!error) {
-          // submit the values
           dispatch({
             type: 'plan/add',
             payload: {
@@ -123,10 +126,6 @@ export default class PlanAdd extends PureComponent {
         }
       });
     };
-
-    function handleChange(value) {
-      console.log(`selected ${value}`);
-    }
 
     return (
       template && (
@@ -167,11 +166,7 @@ export default class PlanAdd extends PureComponent {
                     {form.getFieldDecorator('planAuthor', {
                       rules: [{ required: true, message: '計画作成者入力してください' }],
                     })(
-                      <Select
-                        // mode="multiple"
-                        style={{ width: '100%' }}
-                        onChange={handleChange}
-                      >
+                      <Select style={{ width: '100%' }} onChange={handleChange} >
                         {planAuthor}
                       </Select>
                     )}
@@ -184,11 +179,7 @@ export default class PlanAdd extends PureComponent {
                     {form.getFieldDecorator('certification', {
                       rules: [{ required: true, message: '介護認定入力してください' }],
                     })(
-                      <Select
-                        // mode="multiple"
-                        style={{ width: '100%' }}
-                        onChange={handleChange}
-                      >
+                      <Select style={{ width: '100%' }} onChange={handleChange} >
                         {certification}
                       </Select>
                     )}
@@ -199,11 +190,7 @@ export default class PlanAdd extends PureComponent {
                     {form.getFieldDecorator('admin', {
                       rules: [{ required: true, message: '管理者入力してください' }],
                     })(
-                      <Select
-                        // mode="multiple"
-                        style={{ width: '100%' }}
-                        onChange={handleChange}
-                      >
+                      <Select style={{ width: '100%' }} onChange={handleChange} >
                         {admin}
                       </Select>
                       )}
@@ -275,17 +262,22 @@ export default class PlanAdd extends PureComponent {
                   <Form.Item wrapperCol={{ span: 20 }} label="病名、合併症(心疾患、吸器疾患等)：">
                     {form.getFieldDecorator('diseaseName', {
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(
+                      <Select mode="multiple" style={{ width: '100%' }} onChange={handleChange} >
+                        {diseaseName}
+                      </Select>
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
-                <Form.Item
-                    wrapperCol={{ span: 20 }}
-                    label="運動時のリスク(血圧、不整脈、呼吸等)："
-                  >
+                <Form.Item wrapperCol={{ span: 20 }} label="運動時のリスク(血圧、不整脈、呼吸等)：" >
                     {form.getFieldDecorator('exerciseRisk', {
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(
+                      <Select mode="multiple" style={{ width: '100%' }} onChange={handleChange} >
+                        {exerciseRisk}
+                      </Select>
+                    )}
                   </Form.Item>                  
                 </Col>
               </Row>
@@ -298,10 +290,7 @@ export default class PlanAdd extends PureComponent {
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
-                <Form.Item
-                    wrapperCol={{ span: 20 }}
-                    label="在宅環境(生活課題に関連する在宅環境課題)："
-                  >
+                <Form.Item wrapperCol={{ span: 20 }} label="在宅環境(生活課題に関連する在宅環境課題)：" >
                     {form.getFieldDecorator('homeEnvironment', {
                       rules: [{ required: true, message: '入力してください' }],
                     })(<Input placeholder="入力してください" />)}
@@ -318,8 +307,6 @@ export default class PlanAdd extends PureComponent {
                     {form.getFieldDecorator('additionalTraining.longTermGoals', {
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                      // <Input type="Date" placeholder="長期目標" />
-                      // <DatePicker initialValue={moment(new Date(), 'YYYY-MM-DD')} />
                       <Select placeholder="目標期間">
                         <Option value="3">3ヵ月</Option>
                         <Option value="6">6ヵ月</Option>
@@ -354,8 +341,6 @@ export default class PlanAdd extends PureComponent {
                     {form.getFieldDecorator('additionalTraining.shortTermGoals', {
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                      // <Input type="Date" placeholder="長期目標" />
-                      // <DatePicker initialValue={moment(new Date(), 'YYYY-MM-DD')} />
                       <Select placeholder="目標期間">
                         <Option value="3">3ヵ月</Option>
                         <Option value="6">6ヵ月</Option>
@@ -410,8 +395,6 @@ export default class PlanAdd extends PureComponent {
                     {form.getFieldDecorator('planTow.longTermGoals', {
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                      // <Input type="Date" placeholder="長期目標" />
-                      // <DatePicker initialValue={moment(new Date(), 'YYYY-MM-DD')} />
                       <Select placeholder="目標期間">
                         <Option value="3">3ヵ月</Option>
                         <Option value="6">6ヵ月</Option>
@@ -446,8 +429,6 @@ export default class PlanAdd extends PureComponent {
                     {form.getFieldDecorator('planTow.shortTermGoals', {
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                      // <Input type="Date" placeholder="長期目標" />
-                      // <DatePicker initialValue={moment(new Date(), 'YYYY-MM-DD')} />
                       <Select placeholder="目標期間">
                         <Option value="3">3ヵ月</Option>
                         <Option value="6">6ヵ月</Option>
@@ -520,7 +501,6 @@ export default class PlanAdd extends PureComponent {
             </Card>
           </Form>
           <FooterToolbar style={{ width: this.state.width }}>
-            {/* {getErrorInfo()} */}
             <Button type="primary" onClick={validate} loading={submitting}>
               <Link to="/patient/list-patient">
                 保存

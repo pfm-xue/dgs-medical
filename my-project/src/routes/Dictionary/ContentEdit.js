@@ -133,18 +133,18 @@ export default class ContentAdd extends PureComponent {
               </FormItem>
               <FormItem {...formItemLayout} label="データ">
                 {form.getFieldDecorator('projectData', {
+                  initialValue: parameter.projectData,
                   rules: [{ required: true, message: '選択入力してください' }],
                 })(
                   <Select
                     mode="tags"
                     style={{ width: '100%' }}
-                    initialValue={parameter.projectData}
                     onChange={handleChange}
                   >
                     {projectData}
                   </Select>
                 )}
-              </FormItem>
+              </FormItem>           
             </Card>
           </Form>
           <FooterToolbar style={{ width: this.state.width }}>

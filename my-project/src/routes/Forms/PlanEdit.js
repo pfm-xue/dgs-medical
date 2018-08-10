@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Card, Button, Form, Icon, Col, Row, Input, Select, Divider, Popover, Slider, DatePicker } from 'antd';
+import { Card, Button, Form, Col, Row, Input, Select, Divider, Slider } from 'antd';
 import { connect } from 'dva';
 import FooterToolbar from 'components/FooterToolbar';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -30,8 +30,10 @@ const dementiaList = {
   6: 'ⅣM',
 };
 
-@connect(({ plan, loading }) => ({
+@connect(({ plan, template, role, loading }) => ({
   plan,
+  role,
+  template,
   planLoading: loading.models.plan,
 }))
 @Form.create()
@@ -59,14 +61,13 @@ export default class PlanEdit extends PureComponent {
     }
   };
   render() {
-    const { form, dispatch, submitting, plan } = this.props;
-    const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
+    const { form, dispatch, role, template, submitting, plan } = this.props;
+    const { getFieldDecorator, validateFieldsAndScroll } = form;
     let parameter = plan.data.list[0];
 
     const validate = () => {
       validateFieldsAndScroll((error, values) => {
         if (!error) {
-          // submit the values
           dispatch({
             type: 'plan/add',
             payload: {
@@ -77,7 +78,54 @@ export default class PlanEdit extends PureComponent {
       });
     };
 
-    const dateFormat = 'YYYY-MM-DD';
+    // 病名、合併症
+    let diseaseName = [];
+    // 運動時のリスク
+    let exerciseRisk = [];
+
+    if (typeof template !== 'undefined') {
+      pushDate("病名、合併症");
+      pushDate("運動時のリスク");
+    }
+
+    function pushDate(value) {
+      let list = template.data.list;
+      if (typeof list !== 'undefined' && list.length !== 0 ) {
+        for (let i = 0; i < list.length; i += 1) {
+          const name = list[i].project;
+          if (name === value && value === "病名、合併症" ) {
+            list[i].projectData.map((item,i) => {
+              diseaseName.push(<Option key={item}>{item}</Option>);
+            });
+            break;
+          }
+          if (name === value && value === "運動時のリスク" ) {
+            list[i].projectData.map((item,i) => {
+              exerciseRisk.push(<Option key={item}>{item}</Option>);
+            });
+            break;
+          }
+        }
+      }
+    }
+
+    // 計画作成者
+    let planAuthor = [];
+    // 介護認定
+    let certification = [];
+    // 管理者
+    let admin = [];
+
+    role.data.list.map((item,) => {
+      planAuthor.push(<Option key={item._id}>{item.adminName}</Option>);
+      certification.push(<Option key={item._id}>{item.adminName}</Option>);
+      admin.push(<Option key={item._id}>{item.adminName}</Option>);
+    }); 
+
+
+    function handleChange(value) {
+      console.log(`selected ${value}`);
+    }    
 
     return (
       parameter && (
@@ -132,7 +180,11 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('planAuthor', {
                       initialValue: parameter.planAuthor,
                       rules: [{ required: true, message: '計画作成者入力してください' }],
-                    })(<Input placeholder="入力してください" disabled />)}
+                    })(
+                      <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                        {planAuthor}
+                      </Select>
+                    )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -142,7 +194,11 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('certification', {
                       initialValue: parameter.certification,
                       rules: [{ required: true, message: '介護認定入力してください' }],
-                    })(<Input placeholder="入力してください" disabled />)}
+                    })(
+                      <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                        {certification}
+                      </Select>
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -150,7 +206,11 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('admin', {
                       initialValue: parameter.admin,
                       rules: [{ required: true, message: '管理者入力してください' }],
-                    })(<Input placeholder="入力してください" disabled />)}
+                    })(
+                      <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                        {admin}
+                      </Select>
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
@@ -228,7 +288,11 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('diseaseName', {
                       initialValue: parameter.diseaseName,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(
+                      <Select mode="multiple" style={{ width: '100%' }} onChange={handleChange} >
+                        {diseaseName}
+                      </Select>
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
@@ -239,7 +303,11 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('exerciseRisk', {
                       initialValue: parameter.exerciseRisk,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(
+                      <Select mode="multiple" style={{ width: '100%' }} onChange={handleChange} >
+                        {exerciseRisk}
+                      </Select>
+                    )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -253,10 +321,7 @@ export default class PlanEdit extends PureComponent {
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
-                  <Form.Item
-                    wrapperCol={{ span: 20 }}
-                    label="在宅環境(生活課題に関連する在宅環境課題)："
-                  >
+                  <Form.Item wrapperCol={{ span: 20 }} label="在宅環境(生活課題に関連する在宅環境課題)：" >
                     {form.getFieldDecorator('homeEnvironment', {
                       initialValue: parameter.homeEnvironment,
                       rules: [{ required: true, message: '入力してください' }],
@@ -464,7 +529,6 @@ export default class PlanEdit extends PureComponent {
             </Card>
           </Form>
           <FooterToolbar style={{ width: this.state.width }}>
-            {/* {getErrorInfo()} */}
             <Link to="/patient/list-patient">
               <Button type="primary" onClick={validate} loading={submitting}>
                 保存

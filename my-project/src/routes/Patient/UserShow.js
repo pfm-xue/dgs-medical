@@ -102,6 +102,7 @@ export default class UserShow extends PureComponent {
           name: list[i].fileName,
           status: 'done',
           url: `${REMOTE_URL}/image/${list[i].name}`,
+          thumbUrl: `${REMOTE_URL}/image/${list[i].name}`,
         };
         imageList.push(image);
       }

@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Card, Button, Form, Icon, Divider, Popover, Input } from 'antd';
+import { Card, Button, Form, Icon, Divider, Popover, Input, Select } from 'antd';
 import { connect } from 'dva';
 import FooterToolbar from 'components/FooterToolbar';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from './ContentAdd.less';
 import { Link } from 'dva/router';
+const Option = Select.Option;
 const FormItem = Form.Item;
 
 @connect(({ template, loading }) => ({
@@ -100,8 +101,10 @@ export default class ContentAdd extends PureComponent {
       );
     };
 
-    function onSelect(suggestion) {
-      console.log('onSelect', suggestion);
+    let projectData = [];
+
+    function handleChange(value) {
+      console.log(`selected ${value}`);
     }
 
     return (
@@ -126,7 +129,15 @@ export default class ContentAdd extends PureComponent {
                     message: '選択入力してください',
                   },
                 ],
-              })(<Input placeholder="" />)}
+              })(
+              <Select
+                mode="tags"
+                style={{ width: '100%' }}
+                onChange={handleChange}
+              >
+                {projectData}
+              </Select>              
+              )}
             </FormItem>
           </Card>
         </Form>

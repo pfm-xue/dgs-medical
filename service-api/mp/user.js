@@ -264,21 +264,30 @@ router.post('/uploadCover/:user_id', upload.single('logo'), async (req, res, nex
   // check manager
   await checkManager(req);
 
-  const { user_id } = req.params;
+  logger.info(req.file);
 
+  
+  const { user_id } = req.params;
+  
+  const filename = req.file.filename + ".png";
   const user = await mdb.User.findById(user_id);
   let imageList = user.image;
   let newData = {
-    name : req.file.filename,
+    name : filename,
     fileName: req.file.originalname,
     path : req.file.path,
   }
   imageList.push(newData);
-
+  
   let newUser;
   newUser = await mdb.User.findByIdAndUpdate(user_id, {
     image: imageList,
   });
+  
+  const name = path.join(__dirname, '..', 'public/image', req.file.filename);
+  const newName = path.join(__dirname, '..', 'public/image', filename );
+
+  fs.rename(name, newName);
 
   const list = await mdb.User.find()
   .sort('-_id');
