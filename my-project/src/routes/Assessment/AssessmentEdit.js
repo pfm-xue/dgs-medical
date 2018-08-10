@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Form, Input, Button, Card, Radio, Row, Col, Divider, message } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import FooterToolbar from 'components/FooterToolbar';
+import { REMOTE_URL } from '../../utils/utils';
 import { Link } from 'dva/router';
 const FormItem = Form.Item;
 import styles from './AssessmentEdit.less';
@@ -74,7 +75,7 @@ export default class AssessmentEdit extends PureComponent {
       });
   
       message.success(
-        <a href="/アセスメント.xlsx" download="アセスメント.xlsx">「アセスメント.xlsx」作成成功。  ダウンロード</a>
+        <a href={`${REMOTE_URL}/excel/アセスメント.xlsx`} download="アセスメント.xlsx">「アセスメント.xlsx」作成成功。  ダウンロード</a>
       );
     };    
   

@@ -15,7 +15,7 @@ function readFileP(template_path) {
 }
 //写文件
 function writeFileP(filename, newData) {
-  fs.writeFileSync(path.join('/my-project/public/', `${filename}.xlsx`), newData, 'binary');
+  fs.writeFileSync(path.join(__dirname, '..', '/public/excel/', `${filename}.xlsx`), newData, 'binary');
 }
 //
 // 打印個別機能訓綶計画書

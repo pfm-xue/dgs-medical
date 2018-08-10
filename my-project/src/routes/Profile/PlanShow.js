@@ -20,6 +20,7 @@ import {
   // TimePicker,  
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import { REMOTE_URL } from '../../utils/utils';
 import styles from './PlanShow.less';
 import { Link } from 'dva/router';
 import moment from 'moment';
@@ -58,7 +59,7 @@ export default class PlanShow extends PureComponent {
     });
 
     message.success(
-      <a href="/個別機能訓綶計画書.xlsx" download="個別機能訓綶計画書.xlsx">「個別機能訓綶計画書.xlsx」作成成功。  ダウンロード</a>
+      <a href={`${REMOTE_URL}/excel/個別機能訓綶計画書.xlsx`} download="個別機能訓綶計画書.xlsx">「個別機能訓綶計画書.xlsx」作成成功。  ダウンロード</a>
     );
   };
 

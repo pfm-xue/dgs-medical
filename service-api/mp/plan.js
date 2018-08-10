@@ -65,8 +65,6 @@ GET http://localhost:3001/mp/plan/5afbee7ed0e2860bdf0de484
 */
 router.get('/user/:user_id', async (req, res) => {
   const { user_id } = req.params;
-  console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  uer_id");
-  console.log(user_id);
   
   const list = await mdb.Plan.find({user: user_id })
   .sort('-_id')
@@ -144,10 +142,10 @@ Authorization: Bearer odif2wvI8hUXIXBTcg4rarBYOfCI
 router.post('/', async (req, res, next) => {
   // check manager
   await checkManager(req);
-
     //TODO: 频度，数量的限制
-    if (req.body.planData.printing) {
+    if (req.body.planData.printing) {      
       const filename = await exportXlsx.printTicketTemplate(req.body.planData);
+      console.log(filename);
     } else {
         let plan;
         if (req.body.planData._id) {
