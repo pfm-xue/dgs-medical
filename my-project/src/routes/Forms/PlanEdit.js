@@ -115,11 +115,23 @@ export default class PlanEdit extends PureComponent {
     let certification = [];
     // 管理者
     let admin = [];
+    // 看護
+    let nursing = [];
+    // 介護
+    let nursingCare = [];
+    // 相談員
+    let counselor = [];    
+    // 機能訓練
+    let functionalTraining = [];        
 
     role.data.list.map((item,) => {
       planAuthor.push(<Option key={item._id}>{item.adminName}</Option>);
       certification.push(<Option key={item._id}>{item.adminName}</Option>);
       admin.push(<Option key={item._id}>{item.adminName}</Option>);
+      nursing.push(<Option key={item._id}>{item.adminName}</Option>);
+      nursingCare.push(<Option key={item._id}>{item.adminName}</Option>);
+      counselor.push(<Option key={item._id}>{item.adminName}</Option>);
+      functionalTraining.push(<Option key={item._id}>{item.adminName}</Option>);             
     }); 
 
 
@@ -218,7 +230,12 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('nursing', {
                       initialValue: parameter.nursing,
                       rules: [{ required: true, message: '看護入力してください' }],
-                    })(<Input placeholder="入力してください" disabled />)}
+                    })(
+                    // <Input placeholder="入力してください" disabled />
+                    <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                      {nursing}
+                    </Select>
+                    )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -228,7 +245,12 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('nursingCare', {
                       initialValue: parameter.nursingCare,
                       rules: [{ required: true, message: '介護入力してください' }],
-                    })(<Input placeholder="入力してください" disabled />)}
+                    })(
+                    // <Input placeholder="入力してください" disabled />
+                    <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                      {nursingCare}
+                    </Select>                    
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -236,7 +258,12 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('functionalTraining', {
                       initialValue: parameter.functionalTraining,
                       rules: [{ required: true, message: '機能訓練入力してください' }],
-                    })(<Input placeholder="入力してください" disabled />)}
+                    })(
+                    // <Input placeholder="入力してください" disabled />
+                    <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                      {functionalTraining}
+                    </Select>                    
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
@@ -244,7 +271,12 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('counselor', {
                       initialValue: parameter.counselor,
                       rules: [{ required: true, message: '相談員入力してください' }],
-                    })(<Input placeholder="入力してください" disabled />)}
+                    })(
+                    // <Input placeholder="入力してください" disabled />
+                    <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                      {counselor}
+                    </Select>                       
+                    )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -337,13 +369,19 @@ export default class PlanEdit extends PureComponent {
                 <Col lg={6} md={12} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="長期目標：">
                     {form.getFieldDecorator('additionalTraining.longTermGoals', {
-                      initialValue: moment(parameter.additionalTraining.longTermGoals).format('YYYY-MM-DD'),
+                      initialValue: parameter.additionalTraining.longTermGoals,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input type="Date" placeholder="長期目標" />)}
+                    })(
+                    // <Input type="Date" placeholder="長期目標" />
+                    <Select placeholder="目標期間">
+                      <Option value="3">3ヵ月</Option>
+                      <Option value="6">6ヵ月</Option>
+                    </Select>
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
-                  <Form.Item>
+                <Form.Item>
                   {getFieldDecorator('additionalTraining.longCalculation', {
                     initialValue: parameter.additionalTraining.longCalculation,
                     rules: [{ required: true, message: '入力してください' }],
@@ -369,9 +407,15 @@ export default class PlanEdit extends PureComponent {
                 <Col lg={6} md={12} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="短期目標：">
                     {form.getFieldDecorator('additionalTraining.shortTermGoals', {
-                      initialValue: moment(parameter.additionalTraining.shortTermGoals).format('YYYY-MM-DD'),
+                      initialValue: parameter.additionalTraining.shortTermGoals,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input type="Date" placeholder="短期目標" />)}
+                    })(
+                    // <Input type="Date" placeholder="短期目標" />
+                    <Select placeholder="目標期間">
+                      <Option value="3">3ヵ月</Option>
+                      <Option value="6">6ヵ月</Option>
+                    </Select>                    
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -422,9 +466,15 @@ export default class PlanEdit extends PureComponent {
                 <Col lg={6} md={12} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="長期目標：">
                     {form.getFieldDecorator('planTow.longTermGoals', {
-                      initialValue: moment(parameter.planTow.longTermGoals).format('YYYY-MM-DD'),
+                      initialValue: parameter.planTow.longTermGoals,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input type="Date" placeholder="長期目標" />)}
+                    })(
+                    // <Input type="Date" placeholder="長期目標" />
+                    <Select placeholder="目標期間">
+                      <Option value="3">3ヵ月</Option>
+                      <Option value="6">6ヵ月</Option>
+                    </Select>                    
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -454,9 +504,15 @@ export default class PlanEdit extends PureComponent {
                 <Col lg={6} md={12} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="短期目標：">
                     {form.getFieldDecorator('planTow.shortTermGoals', {
-                      initialValue: moment(parameter.planTow.shortTermGoals).format('YYYY-MM-DD'),
+                      initialValue: parameter.planTow.shortTermGoals,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input type="Date" placeholder="短期目標" />)}
+                    })(
+                    // <Input type="Date" placeholder="短期目標" />
+                    <Select placeholder="目標期間">
+                      <Option value="3">3ヵ月</Option>
+                      <Option value="6">6ヵ月</Option>
+                    </Select>                      
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -490,8 +546,8 @@ export default class PlanEdit extends PureComponent {
                 </Card>
               </Row>
               <Row gutter={16}>
-                <Col lg={6} md={12} sm={24} />
-                <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24} />
+                <Col lg={6} md={12} sm={24}/>
+                <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}/>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
                   <Form.Item labelCol={{ span: 6 }} wrapperCol={{ span: 15 }} label="プログラム立案者：">
                   {form.getFieldDecorator('planTow.mastermind', {

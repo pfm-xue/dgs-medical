@@ -5,6 +5,7 @@ const logger = require('../lib/logging').getLogger('mp/admin');
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const bcrypt = require('bcryptjs');
 
 const dest = path.join(__dirname, '..', 'public');
 const upload = multer({ dest });
@@ -141,6 +142,7 @@ router.post('/', async (req, res, next) => {
   if (req.body.login) {
     let status,
      admin = await mdb.Admin.findOne({email : req.body.userName });
+      //  const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(config.saltrounds));
     if (admin.password === req.body.password  ) {
       status = 'ok';
     } else {
@@ -152,6 +154,15 @@ router.post('/', async (req, res, next) => {
       currentAuthority: 'admin',
     });
   } else {
+
+    // password
+    if (req.body.fields.password) {
+      const hash = bcrypt.hashSync(req.body.fields.password, bcrypt.genSaltSync(config.saltrounds));
+      req.body.fields.password = hash;
+    } else {
+      delete req.body.fields.password;
+    }
+
     if (req.body.fields._id) {
       const data = req.body.fields;
   

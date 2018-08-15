@@ -35,7 +35,6 @@ export default class TableForm extends PureComponent {
     const newData = data.map(item => ({ ...item }));
     const target = this.getRowByKey(key, newData);
     if (target) {
-      // 进入编辑状态时保存原始数据
       if (!target.editable) {
         this.cacheOriginData[key] = { ...target };
       }
@@ -155,6 +154,16 @@ export default class TableForm extends PureComponent {
                 onChange={e => this.handleFieldChange(e, 'programContent', record.key)}
                 onKeyPress={e => this.handleKeyPress(e, record.key)}
               />
+              // <Select
+              //  value={text}
+              //  placeholder="プログラム内容"
+              //  onChange={e => this.handleFieldChange(e, 'programContent', record.key)}
+              //  onKeyPress={e => this.handleKeyPress(e, record.key)}
+              //  style={{ width: '100%' }}
+              //  onChange={handleChange}
+              // >
+              //   {programContent}
+              // </Select>              
             );
           }
           return text;
@@ -238,12 +247,17 @@ export default class TableForm extends PureComponent {
         render: (text, record) => {
           if (record.editable) {
             return (
-              <Input
+              <Select 
                 value={text}
                 placeholder="主な実施者"
                 onChange={e => this.handleFieldChange(e, 'personLiable', record.key)}
                 onKeyPress={e => this.handleKeyPress(e, record.key)}
-              />
+              >
+                <Option value="介護士">介護士</Option>
+                <Option value="施設内システム管理者">施設内システム管理者</Option>
+                <Option value="看護師">看護師</Option>
+                <Option value="相談員">相談員</Option>
+              </Select>              
             );
           }
           return text;

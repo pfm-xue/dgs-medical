@@ -74,7 +74,7 @@ const CreateForm = Form.create()(props => {
         })(
           <Select placeholder="選択してください" style={{ width: '100%' }}>
             <Option value="介護士">介護士</Option>
-            <Option value="施設内システム管理者1">施設内システム管理者</Option>
+            <Option value="施設内システム管理者">施設内システム管理者</Option>
             <Option value="看護師">看護師</Option>
             <Option value="相談員">相談員</Option>
           </Select>

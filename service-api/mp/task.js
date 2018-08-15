@@ -32,6 +32,7 @@ router.get('/', async (req, res) => {
   const list = await mdb.Task.find()
     .sort('-_id')
     .populate('task_user')
+    .populate('task_plan')
     .populate('task_admin');
   res.json({
     list: list,

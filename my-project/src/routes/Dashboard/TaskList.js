@@ -1,7 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
-import moment from 'moment';
-import { connect } from 'dva';
+import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import styles from './TaskList.less';
 import { Link } from 'dva/router';
+import { connect } from 'dva';
+import moment from 'moment';
 import {
   Card,
   List,
@@ -20,11 +22,9 @@ import {
   DatePicker,
   TimePicker,
 } from 'antd';
-const { TabPane } = Tabs;
 const FormItem = Form.Item;
+const { TabPane } = Tabs;
 const { Search } = Input;
-import styles from './TaskList.less';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 @connect(({ task, plan, role, user, loading }) => ({
   task,
@@ -110,7 +110,6 @@ export default class TaskList extends PureComponent {
       modalVisible: false,
       modalVisible1: false,
     });
-    location.reload();
   };
 
   componentWillUnmount() {
@@ -164,7 +163,6 @@ export default class TaskList extends PureComponent {
         fields: record,
       },
     });
-    // location.reload();
   };
 
   dateChange = (value) => {
@@ -257,16 +255,22 @@ export default class TaskList extends PureComponent {
             </Form.Item>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="開始実施">
               {form.getFieldDecorator('recording.startTime', {
-                initialValue: data.recording.startTime,
+                initialValue: moment(data.recording.startTime, 'HH:mm:ss'),
               })(
-                <TimePicker />
+                // <TimePicker initialValue={moment(data.recording.startTime, 'HH:mm:ss')} />
+                <TimePicker
+                  // initialValue={moment(data.recording.endTime, 'HH:mm:ss')}
+                />                
               )}
             </FormItem>                
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="実施終了">
               {form.getFieldDecorator('recording.endTime', {
-                initialValue: data.recording.endTime,
+                initialValue: moment(data.recording.endTime, 'HH:mm:ss'),
               })(
-                <TimePicker />
+                <TimePicker
+                  format={'HH:mm:ss'}
+                  // initialValue={moment(data.recording.endTime, 'HH:mm:ss')}
+                />
               )}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="プログラム">

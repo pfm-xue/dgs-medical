@@ -157,7 +157,10 @@ export default class UserShow extends PureComponent {
               <div>
                 <ul className="events">
                   <li>利用者氏名：{data.task_user.name}</li>
-                  {/* <li>管理者氏名：{data.task_admin.adminName}</li> */}
+                  個別機能訓練加算
+                  <li>プログラム：{data.task_plan.additionalTraining.enum[0].programContent}</li>
+                  個別機能訓練計画書
+                  <li>プログラム：{data.task_plan.planTow.enum[0].programContent}</li>
                 </ul>
               </div>
             </Card>

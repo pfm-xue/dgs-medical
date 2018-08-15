@@ -73,15 +73,26 @@ export default class PlanAdd extends PureComponent {
     let certification = [];
     // 管理者
     let admin = [];
+    // 看護
+    let nursing = [];
+    // 介護
+    let nursingCare = [];
+    // 相談員
+    let counselor = [];    
+    // 機能訓練
+    let functionalTraining = [];    
     // 病名、合併症
     let diseaseName = [];
     // 運動時のリスク
     let exerciseRisk = [];
-
     role.data.list.map((item,) => {
       planAuthor.push(<Option key={item._id}>{item.adminName}</Option>);
       certification.push(<Option key={item._id}>{item.adminName}</Option>);
       admin.push(<Option key={item._id}>{item.adminName}</Option>);
+      nursing.push(<Option key={item._id}>{item.adminName}</Option>);
+      nursingCare.push(<Option key={item._id}>{item.adminName}</Option>);
+      counselor.push(<Option key={item._id}>{item.adminName}</Option>);
+      functionalTraining.push(<Option key={item._id}>{item.adminName}</Option>);                        
     }); 
 
     if (typeof template !== 'undefined') {
@@ -200,7 +211,12 @@ export default class PlanAdd extends PureComponent {
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="看護：">
                     {form.getFieldDecorator('nursing', {
                       rules: [{ required: true, message: '看護入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(
+                    // <Input placeholder="入力してください" />
+                    <Select style={{ width: '100%' }} onChange={handleChange} >
+                      {nursing}
+                    </Select>                    
+                    )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -209,21 +225,36 @@ export default class PlanAdd extends PureComponent {
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="介護：">
                     {form.getFieldDecorator('nursingCare', {
                       rules: [{ required: true, message: '介護入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(
+                    // <Input placeholder="入力してください" />
+                    <Select style={{ width: '100%' }} onChange={handleChange} >
+                      {nursingCare}
+                    </Select>
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="機能訓練：">
                     {form.getFieldDecorator('functionalTraining', {
                       rules: [{ required: true, message: '機能訓練入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(
+                    // <Input placeholder="入力してください" />
+                    <Select style={{ width: '100%' }} onChange={handleChange} >
+                      {functionalTraining}
+                    </Select>
+                    )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="相談員：">
                     {form.getFieldDecorator('counselor', {
                       rules: [{ required: true, message: '相談員入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(
+                    // <Input placeholder="入力してください" />
+                    <Select style={{ width: '100%' }} onChange={handleChange} >
+                      {counselor}
+                    </Select>                       
+                    )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -303,7 +334,7 @@ export default class PlanAdd extends PureComponent {
             <Card title="個別機能訓練加算Ⅰ" className={styles.card} bordered={false}>
               <Row gutter={16}>
                 <Col lg={6} md={12} sm={24}>
-                  <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="長期目標：">
+                  <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="長期目標："> 
                     {form.getFieldDecorator('additionalTraining.longTermGoals', {
                       rules: [{ required: true, message: '入力してください' }],
                     })(
