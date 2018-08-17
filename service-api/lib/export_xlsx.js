@@ -18,8 +18,7 @@ function writeFileP(filename, newData) {
   fs.writeFileSync(path.join(__dirname, '..', '/public/excel/', `${filename}.xlsx`), newData, 'binary');
 }
 //
-// 打印個別機能訓綶計画書
-//
+// 打印
 exports.printTicketTemplate = async (ticket) => {
   const form_data = ticket;
   
@@ -98,7 +97,7 @@ exports.printTicketTemplate = async (ticket) => {
     });
   }
   if (form_data.pattern === "assessment") {
-
+    
     t.substitute(1, {
       //    関節可動域
       joint_arm: form_data.joint_arm,   // 上肢
@@ -129,9 +128,9 @@ exports.printTicketTemplate = async (ticket) => {
       cleaning: form_data.cleaning,     // 掃除
       washing: form_data.washing,       // 洗濯
       //    評価日
-      total_Short: form_data.total_Short,   // 評価日
+      total_Short: moment(form_data.total_Short).format('YYYY-MM-DD'),   // 評価日
+     
       //    Short Physical Performance Battery
-
       //    バランス
       closedStance: form_data.closedStance,  // 閉脚立位
       semiTandem: form_data.semiTandem,      // セミタンデム位
@@ -146,7 +145,7 @@ exports.printTicketTemplate = async (ticket) => {
   }
 
   //新文件名
-  const newData = t.generate();
+  const newData = t.generate(); 
   await writeFileP(filename, newData);
   return `${filename}.xlsx`;
 };

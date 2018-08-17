@@ -233,7 +233,7 @@ router.post('/upload', upload.single('file'), async (req, res, next) => {
     await Promise.all(user_promises);
   }
 
-  const template_path = path.join(__dirname, '..', 'public', req.file.filename);
+  const template_path = path.join(__dirname, '..', 'public/image', req.file.filename);
 
   const workbook = XLSX.readFile(template_path);  
   

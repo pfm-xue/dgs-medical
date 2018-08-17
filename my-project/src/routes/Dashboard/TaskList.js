@@ -386,14 +386,6 @@ export default class TaskList extends PureComponent {
       </div>
     );
 
-    const menu = (
-      <Menu>
-        <Menu.Item key="new">
-          <Link to="/dashboard/assessment">初回</Link>
-        </Menu.Item>
-      </Menu>
-    );
-
     const columns = [
       {
         title: '到着時間',
@@ -457,8 +449,8 @@ export default class TaskList extends PureComponent {
       },
       {
         title: '体力測定',
-        dataIndex: 'determine',
-        render: text => <Fragment>{!text ? '未実施' : '実施'}</Fragment>,
+        dataIndex: 'assessment',
+        render: text => <Fragment>{!text ? '未実施' : <Link to={'/assessment/edit-assessment/' + text}>アセスメント</Link>}</Fragment>,
       },
       {
         title: '居宅訪問',
@@ -467,15 +459,23 @@ export default class TaskList extends PureComponent {
       },
       {
         title: '操作',
-        render: () => (
+        render: (text, record) => (
           <Fragment>
-            <Dropdown overlay={menu} placement="bottomRight">
+            <Link to={"/dashboard/assessment/" + record._id }>
               <Button type="primary">アセスメント</Button>
-            </Dropdown>
+            </Link>
           </Fragment>
         ),
       },
     ];
+
+    const menu = (
+      <Menu>
+        <Menu.Item key="new">
+          {/* <Link to={"/dashboard/assessment/" +  }>初回</Link> */}
+        </Menu.Item>
+      </Menu>
+    );
 
     const planColumns = [
       {

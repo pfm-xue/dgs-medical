@@ -19,7 +19,7 @@ const checkManager = async (req) => {
   // }
 };
 
-/**
+/**   
 # all assessment信息:
 GET http://localhost:3001/mp/assessment/?page=1
 Authorization: Bearer odif2wvI8hUXIXBTcg4rarBYOfCI
@@ -50,11 +50,7 @@ GET http://localhost:3001/mp/assessment/5afbee7ed0e2860bdf0de484
 */
 router.get('/:assessment_id', async (req, res) => {
   const { assessment_id } = req.params;
-  console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  GET");
   const assessment = await mdb.Assessment.findById(assessment_id);
-
-  console.log(assessment_id);
-  console.log(assessment);
   var list = [assessment]; 
   res.json({
     list: list,
@@ -95,6 +91,8 @@ router.post('/', async (req, res, next) => {
   await checkManager(req);
 
   //TODO: 频度，数量的限制
+  
+  
 
   if(req.body.assessmentData.printing){
     const filename = await exportXlsx.printTicketTemplate(req.body.assessmentData);
@@ -114,8 +112,11 @@ router.post('/', async (req, res, next) => {
       assessment = new mdb.Assessment(data);
       await assessment.save();
     }
-  
+    
     assessment = await mdb.Assessment.findById(assessment._id);
+    let task = await mdb.Task.findByIdAndUpdate(req.body.assessmentData.task_id,{
+      assessment: assessment._id,
+    });
   
     res.json({
       success: true,

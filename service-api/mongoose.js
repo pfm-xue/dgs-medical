@@ -176,6 +176,15 @@ const assessmentSchema = mongoose.Schema({
   washing: Number,               // 洗濯
   // 評価日
   total_Short: Date,             // 評価日
+  // バランス
+  closedStance: String,         // 閉脚立位
+  semiTandem: String,           // セミタンデム位
+  tandem: String,               // タンデム位
+  // 4ｍ　歩行テスト
+  subsidize: String,            // 補助具の使用
+  noOne: String,                // 1回目
+  noTwo: String,                // 2回目
+  chair: String,                // 椅子立ち上がりテスト 5回
   delete_flag: {
     type: Boolean,
     default: false,

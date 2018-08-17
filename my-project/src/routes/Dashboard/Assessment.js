@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Card, Radio, Row, Col, Divider } from 'antd';
+import { Form, Input, Button, Card, Radio, Row, Col, Divider, Slider } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import FooterToolbar from 'components/FooterToolbar';
 import { Link } from 'dva/router';
@@ -80,6 +80,12 @@ export default class BasicForms extends PureComponent {
       <PageHeaderLayout title="アセスメント" content="">
         <Form hideRequiredMark style={{ marginTop: 8 }}>
           <Card style={{ marginBottom: 24 }} title="関節可動域" bordered={false}>
+            <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
+              {form.getFieldDecorator('task_id', {
+                initialValue: this.props.match.params.id,
+                rules: [{ required: true, message: '' }],
+              })(<Input type="hidden" />)}
+            </Form.Item>          
             <FormItem {...formItemLayout} label="上肢">
               {form.getFieldDecorator('joint_arm', {
                 rules: [
@@ -380,7 +386,7 @@ export default class BasicForms extends PureComponent {
                 </Radio.Group>
               )}
             </FormItem>
-            {/* <FormItem {...formItemLayout} label="合計点">
+            <FormItem {...formItemLayout} label="合計点">
                 {form.getFieldDecorator('total', {
                   rules: [
                     {
@@ -389,9 +395,9 @@ export default class BasicForms extends PureComponent {
                     },
                   ],
                 })(
-                  <Slider defaultValue={0}/>
+                  <Slider min={0} max={100} defaultValue={0}/>
               )}
-              </FormItem> */}
+              </FormItem>
           </Card>
           <Card style={{ marginBottom: 24 }} title="家庭でのIADL" bordered={false}>
             <FormItem {...formItemLayout} label="買い物">

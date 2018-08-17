@@ -85,6 +85,7 @@ export default class PlanAdd extends PureComponent {
     let diseaseName = [];
     // 運動時のリスク
     let exerciseRisk = [];
+    let programContent = [];
     role.data.list.map((item,) => {
       planAuthor.push(<Option key={item._id}>{item.adminName}</Option>);
       certification.push(<Option key={item._id}>{item.adminName}</Option>);
@@ -98,6 +99,7 @@ export default class PlanAdd extends PureComponent {
     if (typeof template !== 'undefined') {
       pushDate("病名、合併症");
       pushDate("運動時のリスク");
+      pushDate("プログラム");
     }
 
     function pushDate(value) {
@@ -117,6 +119,12 @@ export default class PlanAdd extends PureComponent {
             });
             break;
           }
+          if (name === value && value === "プログラム" ) {
+            list[i].projectData.map((item,i) => {
+              programContent.push(<Option key={item}>{item}</Option>);
+            });
+            break;
+          }          
         }
       }
     }

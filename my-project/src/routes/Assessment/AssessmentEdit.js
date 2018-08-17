@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Card, Radio, Row, Col, Divider, message } from 'antd';
+import { Form, Input, Button, Card, Radio, Row, Col, Divider, message, Slider } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import FooterToolbar from 'components/FooterToolbar';
 import { REMOTE_URL } from '../../utils/utils';
 import { Link } from 'dva/router';
 const FormItem = Form.Item;
+import moment from 'moment';
 import styles from './AssessmentEdit.less';
 
 @connect(({ assessment, loading }) => ({
@@ -427,8 +428,9 @@ export default class AssessmentEdit extends PureComponent {
                 </Radio.Group>
               )}
             </FormItem>
-            {/* <FormItem {...formItemLayout} label="合計点">
+            <FormItem {...formItemLayout} label="合計点">
                 {form.getFieldDecorator('total', {
+                  initialValue: parameter[0].total,
                   rules: [
                     {
                       required: true,
@@ -436,9 +438,9 @@ export default class AssessmentEdit extends PureComponent {
                     },
                   ],
                 })(
-                  <Slider defaultValue={0}/>
+                  <Slider min={0} max={100} defaultValue={0}/>
               )}
-              </FormItem> */}
+              </FormItem>
           </Card>
           <Card style={{ marginBottom: 24 }} title="家庭でのIADL" bordered={false}>
             <FormItem {...formItemLayout} label="買い物">
@@ -585,7 +587,7 @@ export default class AssessmentEdit extends PureComponent {
               <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
                 <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="評価日">
                   {form.getFieldDecorator('total_Short', {
-                    initialValue: parameter[0].total_Short,
+                    initialValue: moment(parameter[0].total_Short).format('YYYY-MM-DD'),
                     rules: [{ required: true, message: 'セミタンデム位入力してください' }],
                   })(<Input type="Date" placeholder="入力してください" />)}
                 </FormItem>

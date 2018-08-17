@@ -235,7 +235,7 @@ export const getRouterData = app => {
 
     // assessment アセスメント
 
-    '/dashboard/assessment': {
+    '/dashboard/assessment/:id': {
       component: dynamicWrapper(app, ['assessment'], () => import('../routes/Dashboard/Assessment')),
     },
 
