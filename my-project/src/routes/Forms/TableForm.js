@@ -57,7 +57,7 @@ export default class TableForm extends PureComponent {
       time: '',
       personLiable: '',
       editable: true,
-      isNew: true,
+      newEnum: true,
     });
     this.index += 1;
     this.setState({ data: newData });
@@ -113,7 +113,7 @@ export default class TableForm extends PureComponent {
       }
       const { data } = this.state;
       const { onChange } = this.props;
-      delete target.isNew;
+      delete target.newEnum;
       this.toggleEditable(e, key);
       onChange(data);
       this.setState({
@@ -271,8 +271,8 @@ export default class TableForm extends PureComponent {
           if (!!record.editable && loading) {
             return null;
           }
-          if (record.editable) {
-            if (record.isNew) {
+          if (record.editable) {　
+            if (record.newEnum) {
               return (
                 <span>
                   <a onClick={e => this.saveRow(e, record.key)}>追加</a>

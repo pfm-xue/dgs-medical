@@ -13,52 +13,16 @@ import {
   Upload,
   DatePicker,
 } from 'antd';
-import DescriptionList from 'components/DescriptionList';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import moment from 'moment';
 import { Link } from 'dva/router';
 import styles from './UserShow.less';
-import moment from 'moment';
+import DescriptionList from 'components/DescriptionList';
+import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
-const { Description } = DescriptionList;
-const { TabPane } = Tabs;
 const { Step } = Steps;
-
+const { TabPane } = Tabs;
 const FormItem = Form.Item;
-
-const CreateForm = Form.create()(props => {
-  const { modalVisible, form, handleAdd, handleModalVisible } = props;
-  const okHandle = () => {
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-      form.resetFields();
-      handleAdd(fieldsValue);
-    });
-  };
-  return (
-    <Modal
-      title="タスク新規"
-      visible={modalVisible}
-      onOk={okHandle}
-      onCancel={() => handleModalVisible()}
-    >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="実行時間">
-        {form.getFieldDecorator('executeTime', {
-          rules: [{ required: true, message: '入力してください。' }],
-        })(<Input placeholder="入力してください" />)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="使用者">
-        {form.getFieldDecorator('task_user', {
-          rules: [{ required: true, message: '入力してください。' }],
-        })(<Input placeholder="入力してください" />)}
-      </FormItem>
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="管理者">
-        {form.getFieldDecorator('task_admin', {
-          rules: [{ required: true, message: '入力してください。' }],
-        })(<Input placeholder="入力してください" />)}
-      </FormItem>
-    </Modal>
-  );
-});
+const { Description } = DescriptionList;
 
 @connect(({ user, task, plan, loading }) => ({
   task,
@@ -104,25 +68,6 @@ export default class UserShow extends PureComponent {
     });
   };
 
-  handleModalVisible = flag => {
-    this.setState({
-      modalVisible: !!flag,
-    });
-  };
-
-  handleAdd = fields => {
-    this.props.dispatch({
-      type: 'task/add',
-      payload: {
-        fields,
-      },
-    });
-
-    this.setState({
-      modalVisible: false,
-    });
-  };
-
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = file => {
@@ -135,16 +80,8 @@ export default class UserShow extends PureComponent {
   handleChange = ({ fileList }) => this.setState({ fileList });
 
   render() {
-    const {
-      user: { data },
-      userLoading,
-      task,
-      taskLoading,
-      plan,
-      planLoading,
-      dispatch,
-    } = this.props;
-    const { modalVisible, fileList, previewVisible, previewImage } = this.state;
+    const { user: { data }, task, plan, userLoading, taskLoading, planLoading, dispatch } = this.props;
+    const { fileList, previewVisible, previewImage } = this.state;
     let scheduleTime = '';
 
     const uploadButton = (
@@ -153,11 +90,6 @@ export default class UserShow extends PureComponent {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
-
-    const parentMethods = {
-      handleAdd: this.handleAdd,
-      handleModalVisible: this.handleModalVisible,
-    };
 
     function editData(data) {
       data.executeTime = scheduleTime._d;
@@ -315,7 +247,6 @@ export default class UserShow extends PureComponent {
             </TabPane>
           </Tabs>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
       </PageHeaderLayout>
     );
   }

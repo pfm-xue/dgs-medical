@@ -35,6 +35,8 @@ const CreateForm = Form.create()(props => {
     <Modal
       title="管理者登録"
       visible={modalVisible}
+      okText="確認"
+      cancelText="キャンセル"      
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >

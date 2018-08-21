@@ -9,25 +9,12 @@ import {
   Popconfirm,
   Row,
   Col,
-  // Badge,
-  // Table,  
-  // Tabs,  
-  // Calendar,
-  // Steps,
-  // Icon,  
-  // Modal,
-  // Input,
-  // TimePicker,  
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import { REMOTE_URL } from '../../utils/utils';
 import styles from './PlanShow.less';
 import { Link } from 'dva/router';
 import moment from 'moment';
-// import DescriptionList from 'components/DescriptionList';
-// import StandardTable from 'components/StandardTable';
-// const { Description } = DescriptionList;
-// const FormItem = Form.Item;
 
 @connect(({ plan, loading }) => ({
   plan,
@@ -100,7 +87,7 @@ export default class PlanShow extends PureComponent {
                     </p>
                     <p>
                       <b>計画作成者:</b>
-                      {parameter[0].planAuthor}
+                      {parameter[0].planAuthor.adminName}
                     </p>
                     <p>
                       <b>氏名:</b>
@@ -116,33 +103,33 @@ export default class PlanShow extends PureComponent {
                     </p>
                     <p>
                       <b>生年月日:</b>
-                      {parameter[0].user.birth}
+                      {moment(parameter[0].user.birth).format('YYYY-MM-DD')}
                     </p>
                     <p>
                       <b>介護認定:</b>
-                      {parameter[0].certification}
+                      {parameter[0].certification.adminName}
                     </p>
                     <p>
                       <b>管理者:</b>
-                      {parameter[0].admin}
+                      {parameter[0].admin.adminName}
                     </p>
                     <p>
                       <b>看護:</b>
-                      {parameter[0].nursing}
+                      {parameter[0].nursing.adminName}
                     </p>
                     <p>
                       <b>介護:</b>
-                      {parameter[0].nursingCare}
+                      {parameter[0].nursingCare.adminName}
                     </p>                    
                   </Col>
                   <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
                     <p>
                       <b>機能訓練:</b>
-                      {parameter[0].functionalTraining}
+                      {parameter[0].functionalTraining.adminName}
                     </p>                  
                     <p>
                       <b>相談員:</b>
-                      {parameter[0].counselor}
+                      {parameter[0].counselor.adminName}
                     </p>
                     <p>
                       <b>本人の希望:</b>
@@ -182,110 +169,112 @@ export default class PlanShow extends PureComponent {
             </Col>
           </Row>
           <Row>
-            <Col>
-              <Row>
-                <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
-                  <Card style={{ marginBottom: 24 }} title="個別機能訓練加算Ⅰ" bordered={false}>
-                    <p>
-                      <b>長期目標:</b>
-                      {parameter[0].additionalTraining.longTermGoals}
-                    </p>
-                    <p>
-                      <b>長期算定:</b>
-                      {parameter[0].additionalTraining.longCalculation}
-                    </p>                    
-                    <p>
-                      <b>目標逹成度:</b>
-                      {parameter[0].additionalTraining.longTermGoalsDegree}
-                    </p>
-                    <p>
-                      <b>短期目標:</b>
-                      {parameter[0].additionalTraining.shortTermGoals}
-                    </p>
-                    <p>
-                      <b>短期算定:</b>
-                      {parameter[0].additionalTraining.shortCalculation}
-                    </p>                      
-                    <p>
-                      <b>目標逹成度:</b>
-                      {parameter[0].additionalTraining.shortTermGoalsDegree}
-                    </p>
-                    {parameter[0].additionalTraining.enum.map((item, i) => (
-                      <ul>
-                        <li>
-                          <b>NO.{i+1}プログラム内容:</b>{item.programContent}
-                        </li>
-                        <li>
-                          <b>留意点:</b>{item.attention}
-                        </li>
-                        <li>
-                          <b>頻度:</b>{item.frequency}
-                        </li>
-                        <li>
-                          <b>時間:</b>{item.time} min
-                        </li>
-                        <li>
-                          <b>主な実施者:</b>{item.personLiable}
-                        </li>
-                      </ul>
-                        ))}
-                    <p className={styles.right}>
-                      <b>プログラム立案者:</b>{parameter[0].additionalTraining.mastermind}
-                    </p>
-                  </Card>
-                </Col>
-                <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
-                  <Card style={{ marginBottom: 24 }} title="個別機能訓綶計画書Ⅱ" bordered={false}>
-                    <p>
-                      <b>長期目標:</b>
-                      {parameter[0].planTow.longTermGoals}
-                    </p>
-                    <p>
-                      <b>長期算定:</b>
-                      {parameter[0].planTow.longCalculation}
-                    </p>                      
-                    <p>
-                      <b>目標逹成度:</b>
-                      {parameter[0].planTow.longTermGoalsDegree}
-                    </p>
-                    <p>
-                      <b>短期目標:</b>
-                      {parameter[0].planTow.shortTermGoals}
-                    </p>
-                    <p>
-                      <b>短期算定:</b>
-                      {parameter[0].planTow.shortCalculation}
-                    </p>                         
-                    <p>
-                      <b>目標逹成度:</b>
-                      {parameter[0].planTow.shortTermGoalsDegree}
-                    </p>
-                    {parameter[0].planTow.enum.map((item, i) => (
-                          <ul>
-                            <li>
-                              <b>NO.{i+1}プログラム内容:</b>{item.programContent}
-                            </li>
-                            <li>
-                              <b>留意点:</b>{item.attention}
-                            </li>
-                            <li>
-                              <b>頻度:</b>{item.frequency}
-                            </li>
-                            <li>
-                              <b>時間:</b>{item.time} min
-                            </li>
-                            <li>
-                              <b>主な実施者:</b>{item.personLiable}
-                            </li>
-                          </ul>
-                        ))}
-                    <p className={styles.right}>
-                      <b>プログラム立案者:</b>{parameter[0].planTow.mastermind}
-                    </p>
-                  </Card>
-                </Col>
-              </Row>
-            </Col>
+            <Card>
+              <Col>
+                <Row>
+                  <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
+                    <Card style={{ marginBottom: 24 }} title="個別機能訓練加算Ⅰ" bordered={false}>
+                      <p>
+                        <b>長期目標:</b>
+                        {parameter[0].additionalTraining.longTermGoals}
+                      </p>
+                      <p>
+                        <b>長期算定:</b>
+                        {parameter[0].additionalTraining.longCalculation}
+                      </p>                    
+                      <p>
+                        <b>目標逹成度:</b>
+                        {parameter[0].additionalTraining.longTermGoalsDegree}
+                      </p>
+                      <p>
+                        <b>短期目標:</b>
+                        {parameter[0].additionalTraining.shortTermGoals}
+                      </p>
+                      <p>
+                        <b>短期算定:</b>
+                        {parameter[0].additionalTraining.shortCalculation}
+                      </p>                      
+                      <p>
+                        <b>目標逹成度:</b>
+                        {parameter[0].additionalTraining.shortTermGoalsDegree}
+                      </p>
+                      {parameter[0].additionalTraining.enum.map((item, i) => (
+                        <ul>
+                          <li>
+                            <b>NO.{i+1}プログラム内容:</b>{item.programContent}
+                          </li>
+                          <li>
+                            <b>留意点:</b>{item.attention}
+                          </li>
+                          <li>
+                            <b>頻度:</b>{item.frequency}
+                          </li>
+                          <li>
+                            <b>時間:</b>{item.time} min
+                          </li>
+                          <li>
+                            <b>主な実施者:</b>{item.personLiable}
+                          </li>
+                        </ul>
+                      ))}
+                      <p className={styles.right}>
+                        <b>プログラム立案者:</b>{parameter[0].additionalTraining.mastermind}
+                      </p>
+                    </Card>
+                  </Col>
+                  <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
+                    <Card style={{ marginBottom: 24 }} title="個別機能訓綶計画書Ⅱ" bordered={false}>
+                      <p>
+                        <b>長期目標:</b>
+                        {parameter[0].planTow.longTermGoals}
+                      </p>
+                      <p>
+                        <b>長期算定:</b>
+                        {parameter[0].planTow.longCalculation}
+                      </p>                      
+                      <p>
+                        <b>目標逹成度:</b>
+                        {parameter[0].planTow.longTermGoalsDegree}
+                      </p>
+                      <p>
+                        <b>短期目標:</b>
+                        {parameter[0].planTow.shortTermGoals}
+                      </p>
+                      <p>
+                        <b>短期算定:</b>
+                        {parameter[0].planTow.shortCalculation}
+                      </p>                         
+                      <p>
+                        <b>目標逹成度:</b>
+                        {parameter[0].planTow.shortTermGoalsDegree}
+                      </p>
+                      {parameter[0].planTow.enum.map((item, i) => (
+                        <ul>
+                          <li>
+                            <b>NO.{i+1}プログラム内容:</b>{item.programContent}
+                          </li>
+                          <li>
+                            <b>留意点:</b>{item.attention}
+                          </li>
+                          <li>
+                            <b>頻度:</b>{item.frequency}
+                          </li>
+                          <li>
+                            <b>時間:</b>{item.time} min
+                          </li>
+                          <li>
+                            <b>主な実施者:</b>{item.personLiable}
+                          </li>
+                        </ul>
+                      ))}
+                      <p className={styles.right}>
+                        <b>プログラム立案者:</b>{parameter[0].planTow.mastermind}
+                      </p>
+                    </Card>
+                  </Col>
+                </Row>
+              </Col>
+            </Card>
           </Row>
         </PageHeaderLayout>
       )

@@ -16,7 +16,6 @@ import {
   Input,
   Modal,
   Dropdown,
-  Menu,
   Select,
   Icon,
   DatePicker,
@@ -235,6 +234,8 @@ export default class TaskList extends PureComponent {
           <Modal
             title="実施記録基本情報"
             visible={modalVisible1}
+            okText="確認"
+            cancelText="キャンセル"            
             onOk={okHandle}
             onCancel={() => this.handleCancel()}
           >
@@ -308,6 +309,8 @@ export default class TaskList extends PureComponent {
           <Modal
             title="バイタル情報"
             visible={modalVisible}
+            okText="確認"
+            cancelText="キャンセル"
             onOk={okHandle}
             onCancel={() => this.handleCancel()}
           >
@@ -469,14 +472,6 @@ export default class TaskList extends PureComponent {
       },
     ];
 
-    const menu = (
-      <Menu>
-        <Menu.Item key="new">
-          {/* <Link to={"/dashboard/assessment/" +  }>初回</Link> */}
-        </Menu.Item>
-      </Menu>
-    );
-
     const planColumns = [
       {
         title: '利用者名',
@@ -485,8 +480,8 @@ export default class TaskList extends PureComponent {
       },
       {
         title: '計画作成者',
-        dataIndex: 'planAuthor',
-        key: 'planAuthor',
+        dataIndex: 'planAuthor.adminName',
+        key: 'planAuthor.adminName',
       },
       {
         title: '特記事項',
@@ -557,12 +552,6 @@ export default class TaskList extends PureComponent {
             <TabPane 
               key="plan"
               tab={<span><Icon type="solution" />計画書</span>}>
-              {/* <Button type="primary">時間(予定)</Button>
-              <Divider type="vertical" />
-              <DatePicker
-                defaultValue={moment(new Date(), 'YYYY-MM-DD')}
-                onChange={this.dayDate}
-              /> */}
               <Table
                 // 紧凑型
                 size="middle"

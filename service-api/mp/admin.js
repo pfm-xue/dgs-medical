@@ -143,7 +143,7 @@ router.post('/', async (req, res, next) => {
     let status,
      admin = await mdb.Admin.findOne({email : req.body.userName });
       //  const hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(config.saltrounds));
-    if (admin.password === req.body.password  ) {
+    if (bcrypt.compareSync(req.body.password, admin.password)) {
       status = 'ok';
     } else {
       status = 'error';
@@ -165,7 +165,6 @@ router.post('/', async (req, res, next) => {
 
     if (req.body.fields._id) {
       const data = req.body.fields;
-  
       admin = await mdb.Admin.findByIdAndUpdate(req.body.fields._id, data, {
         new: true,
       });

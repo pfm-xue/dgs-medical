@@ -97,7 +97,7 @@ export default class PlanDictionary extends PureComponent {
         render: record => (
           <Fragment>
             <Link to={'/dictionary/plan-edit-data/' + record._id}>
-              <Button size="small" type="primary">
+              <Button type="primary">
                 編集
               </Button>
             </Link>

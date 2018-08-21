@@ -243,8 +243,8 @@ export default class UserShow extends PureComponent {
                     <Card.Grid
                       className={styles.gridStyle}>
                       <p>作成日:{moment(item.createDate).format('YYYY-MM-DD')}</p>
-                      <p>計画作成者:{item.planAuthor}</p>
-                      <p>管理者:{item.admin}</p>
+                      <p>計画作成者:{item.planAuthor.adminName}</p>
+                      <p>管理者:{item.admin.adminName}</p>
                       <p>利用者:{item.user.name}</p>
                       <p>特記事項:{item.specialNotes}</p>
                       <p className={styles.center} >

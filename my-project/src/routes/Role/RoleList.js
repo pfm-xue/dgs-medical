@@ -25,54 +25,52 @@ const CreateForm = Form.create()(props => {
     <Modal
       title="管理者登録"
       visible={modalVisible}
+      okText="確認"
+      cancelText="キャンセル"      
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="管理者ID">
         {form.getFieldDecorator('adminId', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input placeholder="入力してください" />)}
+          rules: [{ required: true, message: '入力してください' }],
+        })(<Input placeholder="管理者ID" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="管理者名前">
         {form.getFieldDecorator('adminName', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input placeholder="入力してください" />)}
+          rules: [{ required: true, message: '入力してください' }],
+        })(<Input placeholder="管理者名前" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="パスワード">
         {form.getFieldDecorator('password', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input type="password" placeholder="入力してください" />)}
+          rules: [{ required: true, max: 10, min: 6,
+            message: 'パスワードのフォーマットが正しくない' }],
+        })(<Input type="password" placeholder="パスワード" />)}
       </FormItem>
-      {/* <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="パスワードの確認">
-        {form.getFieldDecorator('password', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input type="password"  placeholder="入力してください" />)}
-      </FormItem> */}
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="Email">
         {form.getFieldDecorator('email', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input placeholder="入力してください" />)}
+          rules: [{ required: true, message: '入力してください' }],
+        })(<Input placeholder="Email" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="電話番号">
         {form.getFieldDecorator('telephoneNumber', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input placeholder="入力してください" />)}
+          rules: [{ required: true, message: '入力してください' }],
+        })(<Input placeholder="電話番号" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="アドレス">
         {form.getFieldDecorator('address', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input placeholder="入力してください" />)}
+          rules: [{ required: true, message: '入力してください' }],
+        })(<Input placeholder="アドレス" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="職務">
         {form.getFieldDecorator('post', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input placeholder="入力してください" />)}
+          rules: [{ required: true, message: '入力してください' }],
+        })(<Input placeholder="職務" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="role">
         {form.getFieldDecorator('role', {
-          rules: [{ required: true, message: 'Please input some description...' }],
+          rules: [{ required: true, message: '入力してください' }],
         })(
-          <Select placeholder="選択してください" style={{ width: '100%' }}>
+          <Select placeholder="role" style={{ width: '100%' }}>
             <Option value="介護士">介護士</Option>
             <Option value="施設内システム管理者">施設内システム管理者</Option>
             <Option value="看護師">看護師</Option>
@@ -109,10 +107,6 @@ export default class RoleList extends PureComponent {
     this.setState({
       formValues: {},
     });
-    // dispatch({
-    //   type: 'role/fetch',
-    //   payload: {},
-    // });
   };
 
   handleSearch = e => {
@@ -242,55 +236,58 @@ export default class RoleList extends PureComponent {
           <Modal
             title="管理者情報変更"
             visible={modalVisible1}
+            okText="確認"
+            cancelText="キャンセル"            
             onOk={okHandle}
             onCancel={() => this.handleCancel()}
           >
-            {/* <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="管理者ID">
-            {form.getFieldDecorator('adminId', {
-              rules: [{ required: true, message: 'Please input some description...' }],
-            })(<Input placeholder="入力してください" />)}
-          </FormItem> */}
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="">
               {form.getFieldDecorator('_id', {
                 initialValue: roleData._id,
-                rules: [{ required: true, message: 'Please input some description...' }],
+                rules: [{ required: true, message: '入力してください' }],
               })(<Input type="hidden" disabled placeholder="入力してください" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="管理者名前">
               {form.getFieldDecorator('adminName', {
                 initialValue: roleData.adminName,
-                rules: [{ required: true, message: 'Please input some description...' }],
-              })(<Input placeholder="入力してください" />)}
+                rules: [{ required: true, message: '入力してください' }],
+              })(<Input placeholder="管理者名前" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="パスワード">
               {form.getFieldDecorator('password', {
-                initialValue: roleData.password,
-                rules: [{ required: true, message: 'Please input some description...' }],
-              })(<Input type="password" placeholder="入力してください" />)}
+                rules: [{ max: 10, min: 6, message: 'パスワードのフォーマットが正しくない' }],
+              })(<Input type="password" placeholder="パスワード" />)}
             </FormItem>            
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="Email">
-              {form.getFieldDecorator('email', { initialValue: roleData.email })(
-                <Input placeholder="入力してください" />
-              )}
+              {form.getFieldDecorator('email', {
+                initialValue: roleData.email,
+                rules: [{ required: true, message: '入力してください' }],
+               })(<Input placeholder="Email" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="電話番号">
               {form.getFieldDecorator('telephoneNumber', {
                 initialValue: roleData.telephoneNumber,
-              })(<Input placeholder="入力してください" />)}
+                rules: [{ required: true, message: '入力してください' }],
+              })(<Input placeholder="電話番号" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="アドレス">
               {form.getFieldDecorator('address', {
                 initialValue: roleData.address,
-              })(<Input placeholder="入力してください" />)}
+                rules: [{ required: true, message: '入力してください' }],
+              })(<Input placeholder="アドレス" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="職務">
-              {form.getFieldDecorator('post', { initialValue: roleData.post })(
-                <Input placeholder="入力してください" />
-              )}
+              {form.getFieldDecorator('post', {
+                initialValue: roleData.post,
+                rules: [{ required: true, message: '入力してください' }],
+               })(<Input placeholder="職務" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="role">
-              {form.getFieldDecorator('role', { initialValue: roleData.role })(
-                <Select placeholder="選択してください" style={{ width: '100%' }}>
+              {form.getFieldDecorator('role', {
+                initialValue: roleData.role,
+                rules: [{ required: true, message: '入力してください' }],
+               })(
+                <Select placeholder="role" style={{ width: '100%' }}>
                   <Option value="介護士">介護士</Option>
                   <Option value="施設内システム管理者">施設内システム管理者</Option>
                   <Option value="看護師">看護師</Option>
@@ -304,7 +301,6 @@ export default class RoleList extends PureComponent {
     });
 
     function phone(value) {
-      // 139-4093-2459
       var newNumber= value.substr(0, 3) + "-" + value.substr(3, 4) + "-" + value.substr(6, 10);
       return newNumber;
     }  

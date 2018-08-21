@@ -8,15 +8,15 @@ import {
   Card,
   Form,
   Input,
-  Select,
-  Button,
   Modal,
-  DatePicker,
-  Popconfirm,
-  Divider,
   Table,
   Upload,
+  Select,
+  Button,
   message,
+  Divider,
+  Popconfirm,
+  DatePicker,
 } from 'antd';
 import { Link } from 'dva/router';
 import { REMOTE_URL } from '../../utils/utils';
@@ -42,35 +42,43 @@ const CreateForm = Form.create()(props => {
     <Modal
       title="利用者登録"
       visible={modalVisible}
+      okText="確認"
+      cancelText="キャンセル"
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="利用者氏名">
         {form.getFieldDecorator('name', {
           rules: [{ required: true, message: '氏名入力してください' }],
-        })(<Input placeholder="入力してください" />)}
+        })(<Input placeholder="利用者氏名" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="ふりがな">
-        {form.getFieldDecorator('phonetic',)(<Input placeholder="入力してください" />)}
+        {form.getFieldDecorator('phonetic',{
+          rules: [{ required: true, message: 'ふりがな入力してください' }],
+        })(<Input placeholder="ふりがな" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="生年月日">
         {form.getFieldDecorator('birth', {
           rules: [{ required: true, message: '生年月日を選択してください' }],
-        })(<Input type="Date" placeholder="入力してください" />)}
+        })(<Input type="Date" placeholder="生年月日" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="性別">
         {form.getFieldDecorator('sex', {
           rules: [{ required: true, message: '性別を選択してください' }],
-        })(<Select placeholder="選択してください" style={{ width: '100%' }}>
+        })(<Select placeholder="性別" style={{ width: '100%' }}>
             <Option value="男">男</Option>
             <Option value="女">女</Option>
           </Select>)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="電話番号">
-        {form.getFieldDecorator('telephoneNumber', {})(<Input placeholder="入力してください" />)}
+        {form.getFieldDecorator('telephoneNumber', {
+          rules: [{ required: true, message: '電話番号入力してください' }],
+        })(<Input placeholder="電話番号" />)}
       </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="アドレス">
-        {form.getFieldDecorator('address', {})(<Input placeholder="入力してください" />)}
+        {form.getFieldDecorator('address', {
+          rules: [{ required: true, message: 'アドレス入力してください' }],          
+        })(<Input placeholder="アドレス" />)}
       </FormItem>
     </Modal>
   );
@@ -290,6 +298,8 @@ export default class UserList extends PureComponent {
           <Modal
             title="利用者情報変更"
             visible={modalVisible1}
+            okText="確認"
+            cancelText="キャンセル"
             onOk={okHandle}
             onCancel={() => this.handleCancel()}
           >

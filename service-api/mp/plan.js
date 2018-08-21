@@ -31,7 +31,15 @@ router.get('/', async (req, res) => {
 
   const list = await mdb.Plan.find()
     .sort('-_id')
-    .populate('user');
+    .populate('user')
+    .populate('admin')
+    .populate('nursing')
+    .populate('counselor')
+    .populate('planAuthor')
+    .populate('nursingCare')
+    .populate('certification')
+    .populate('functionalTraining');
+
   res.json({
     list,
     pagination: {
@@ -46,11 +54,16 @@ GET http://localhost:3001/mp/plan/5afbee7ed0e2860bdf0de484
 */
 router.get('/:plan_id', async (req, res) => {
   const { plan_id } = req.params;
-  console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  GET");
-  const plan = await mdb.Plan.findById(plan_id).populate('user');
+  const plan = await mdb.Plan.findById(plan_id)
+  .populate('user')
+  .populate('admin')
+  .populate('nursing')
+  .populate('counselor')
+  .populate('planAuthor')
+  .populate('nursingCare')
+  .populate('certification')
+  .populate('functionalTraining');
 
-  console.log(plan_id);
-  console.log(plan);
   var list = [plan]; 
   res.json({
     list: list,
@@ -68,7 +81,15 @@ router.get('/user/:user_id', async (req, res) => {
   
   const list = await mdb.Plan.find({user: user_id })
   .sort('-_id')
-  .populate('user');
+  .populate('user')
+  .populate('admin')
+  .populate('nursing')
+  .populate('counselor')
+  .populate('planAuthor')
+  .populate('nursingCare')
+  .populate('certification')
+  .populate('functionalTraining');
+
   res.json({
     list: list,
     pagination: {},    
@@ -118,8 +139,14 @@ router.post('/search/', async (req, res, next) => {
   
   const list = await mdb.Plan.find(search)
   .sort('-_id')
-  .populate('user');
-  console.log(list);
+  .populate('user')
+  .populate('admin')
+  .populate('nursing')
+  .populate('counselor')
+  .populate('planAuthor')
+  .populate('nursingCare')
+  .populate('certification')
+  .populate('functionalTraining');
   
   res.json({
     list: list,
@@ -201,7 +228,15 @@ router.post('/', async (req, res, next) => {
             nextDate = moment(nextDate).add(1, 'd');
           }
         }
-        plan = await mdb.Plan.findById(plan._id);
+        plan = await mdb.Plan.findById(plan._id)
+          .populate('user')
+          .populate('admin')
+          .populate('nursing')
+          .populate('counselor')
+          .populate('planAuthor')
+          .populate('nursingCare')
+          .populate('certification')
+          .populate('functionalTraining');
         
         var list = [plan]; 
         res.json({

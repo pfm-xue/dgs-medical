@@ -14,24 +14,54 @@ exports.connection = mongoose.connection;
 const planSchema = mongoose.Schema({
   createDate: Date,  // 作成日
   createLastTime: Date,  // 前回作成日
-  planAuthor: String, // 計画作成者
-
-  // phonetic: String, // ふりがな
-  // sex: Number, // 性別
-  // birth: Date, // 生年月日
-  // name: String, // 氏名
-
+  
   user: {
     ref: 'User',
     type: mongoose.Schema.Types.ObjectId,
   },
 
-  certification: String, // 介護認定
-  admin: String,  // 管理者
-  nursing: String,  // 看護
-  nursingCare: String, // 介護
-  functionalTraining: String, // 機能訓練
-  counselor: String, // 相談員
+   // 計画作成者  管理者_id
+  planAuthor: {
+    ref: 'Admin',
+    type: mongoose.Schema.Types.ObjectId,
+  },
+
+  // 介護認定  管理者_id
+  certification: {
+    ref: 'Admin',
+    type: mongoose.Schema.Types.ObjectId,
+  },
+  
+  // 管理者  管理者_id
+  admin: {
+    ref: 'Admin',
+    type: mongoose.Schema.Types.ObjectId,
+  },
+
+  // 看護  管理者_id
+  nursing: {
+    ref: 'Admin',
+    type: mongoose.Schema.Types.ObjectId,
+  },
+
+  // 介護  管理者_id
+  nursingCare: {
+    ref: 'Admin',
+    type: mongoose.Schema.Types.ObjectId,
+  },
+
+  // 機能訓練  管理者_id
+  functionalTraining: {
+    ref: 'Admin',
+    type: mongoose.Schema.Types.ObjectId,
+  },
+
+  // 相談員  管理者_id
+  counselor: {
+    ref: 'Admin',
+    type: mongoose.Schema.Types.ObjectId,
+  },
+
   oneselfDesire: String, // 本人の希望
   familyDesire: String,  // 家族の希望
   disorder: String,  // 障害老人の日常生活自立度
@@ -55,6 +85,7 @@ const planSchema = mongoose.Schema({
       time: String,// 時間
       personLiable: String,// 主な実施者
       editable: Boolean, // 編集許可
+      newEnum: Boolean, // NEW許可
     }],
     mastermind: String,  // プログラム立案者
   },
@@ -74,6 +105,7 @@ const planSchema = mongoose.Schema({
       time: String,// 時間
       personLiable: String,// 主な実施者
       editable: Boolean, // 編集許可
+      newEnum: Boolean, // NEW許可
     }],
     mastermind: String,  // プログラム立案者
   },
@@ -201,10 +233,10 @@ const taskSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
   },
     // 関連管理者
-  // task_admin: {
-  //   ref: 'Admin',
-  //   type: mongoose.Schema.Types.ObjectId,
-  // },
+  task_admin: {
+    ref: 'Admin',
+    type: mongoose.Schema.Types.ObjectId,
+  },
     // 関連計画書
   task_plan: {
     ref: 'Plan',
@@ -230,7 +262,7 @@ const taskSchema = mongoose.Schema({
   },
     // 体力測定-アセスメント
   assessment: {
-    ref: 'UAssessmenter',
+    ref: 'Assessment',
     type: mongoose.Schema.Types.ObjectId,
   },    
   // determine: {

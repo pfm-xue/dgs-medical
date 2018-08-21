@@ -190,7 +190,7 @@ export default class PlanEdit extends PureComponent {
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="計画作成者：">
                     {form.getFieldDecorator('planAuthor', {
-                      initialValue: parameter.planAuthor,
+                      initialValue: parameter.planAuthor._id,
                       rules: [{ required: true, message: '計画作成者入力してください' }],
                     })(
                       <Select disabled style={{ width: '100%' }} onChange={handleChange} >
@@ -204,7 +204,7 @@ export default class PlanEdit extends PureComponent {
                 <Col lg={6} md={12} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="介護認定：">
                     {form.getFieldDecorator('certification', {
-                      initialValue: parameter.certification,
+                      initialValue: parameter.certification._id,
                       rules: [{ required: true, message: '介護認定入力してください' }],
                     })(
                       <Select disabled style={{ width: '100%' }} onChange={handleChange} >
@@ -216,7 +216,7 @@ export default class PlanEdit extends PureComponent {
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="管理者：">
                     {form.getFieldDecorator('admin', {
-                      initialValue: parameter.admin,
+                      initialValue: parameter.admin._id,
                       rules: [{ required: true, message: '管理者入力してください' }],
                     })(
                       <Select disabled style={{ width: '100%' }} onChange={handleChange} >
@@ -228,10 +228,9 @@ export default class PlanEdit extends PureComponent {
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="看護：">
                     {form.getFieldDecorator('nursing', {
-                      initialValue: parameter.nursing,
+                      initialValue: parameter.nursing._id,
                       rules: [{ required: true, message: '看護入力してください' }],
                     })(
-                    // <Input placeholder="入力してください" disabled />
                     <Select disabled style={{ width: '100%' }} onChange={handleChange} >
                       {nursing}
                     </Select>
@@ -243,10 +242,9 @@ export default class PlanEdit extends PureComponent {
                 <Col lg={6} md={12} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="介護：">
                     {form.getFieldDecorator('nursingCare', {
-                      initialValue: parameter.nursingCare,
+                      initialValue: parameter.nursingCare._id,
                       rules: [{ required: true, message: '介護入力してください' }],
                     })(
-                    // <Input placeholder="入力してください" disabled />
                     <Select disabled style={{ width: '100%' }} onChange={handleChange} >
                       {nursingCare}
                     </Select>                    
@@ -256,7 +254,7 @@ export default class PlanEdit extends PureComponent {
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="機能訓練：">
                     {form.getFieldDecorator('functionalTraining', {
-                      initialValue: parameter.functionalTraining,
+                      initialValue: parameter.functionalTraining._id,
                       rules: [{ required: true, message: '機能訓練入力してください' }],
                     })(
                     // <Input placeholder="入力してください" disabled />
@@ -269,10 +267,9 @@ export default class PlanEdit extends PureComponent {
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
                   <Form.Item labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="相談員：">
                     {form.getFieldDecorator('counselor', {
-                      initialValue: parameter.counselor,
+                      initialValue: parameter.counselor._id,
                       rules: [{ required: true, message: '相談員入力してください' }],
                     })(
-                    // <Input placeholder="入力してください" disabled />
                     <Select disabled style={{ width: '100%' }} onChange={handleChange} >
                       {counselor}
                     </Select>                       
