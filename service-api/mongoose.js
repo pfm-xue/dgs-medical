@@ -66,8 +66,12 @@ const planSchema = mongoose.Schema({
   familyDesire: String,  // 家族の希望
   disorder: String,  // 障害老人の日常生活自立度
   dementia: String, // 認知症老人の日常生活自立度
-  diseaseName: String, // 病名、合併症(心疾患、吸器疾患等)
-  exerciseRisk: String, // 運動時のリスク(血圧、不整脈、呼吸等)
+  diseaseName:[
+    String,         // 病名、合併症(心疾患、吸器疾患等)
+  ], 
+  exerciseRisk:[
+    String,         // 運動時のリスク(血圧、不整脈、呼吸等)
+  ],
   lifeIssues: String, // 生活課題
   homeEnvironment: String, // 在宅環境(生活課題に関連する在宅環境課題)
   // 個別機能訓練加算Ⅰ

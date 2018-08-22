@@ -1,30 +1,31 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  DatePicker,
-  Calendar,
-  Button,
-  Modal,
   Card,
   Tabs,
   Icon,
   Form,
+  Modal,
+  Button,
   Upload,
-  Avatar,
+  Calendar,
+  DatePicker,
+  // Col,
+  // Row,
   // Steps,
   // Input,
-  // Row,
-  // Col,
+  // Avatar,
 } from 'antd';
+import moment from 'moment';
+import { Link } from 'dva/router';
+import styles from './UserShow.less';
+import { REMOTE_URL } from '../../utils/utils';
 import DescriptionList from 'components/DescriptionList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import { REMOTE_URL } from '../../utils/utils';
-import styles from './UserShow.less';
-import { Link } from 'dva/router';
-import moment from 'moment';
-const { Description } = DescriptionList;
+
 const { TabPane } = Tabs;
 const FormItem = Form.Item;
+const { Description } = DescriptionList;
 
 @connect(({ user, task, plan, assessment }) => ({
   task,
@@ -36,8 +37,8 @@ const FormItem = Form.Item;
 export default class UserShow extends PureComponent {
   state = {
     formValues: {},
-    previewVisible: false,
     previewImage: '',
+    previewVisible: false,
   };
 
   componentDidMount() {
@@ -46,15 +47,15 @@ export default class UserShow extends PureComponent {
       type: 'task/fetch',
     });
     dispatch({
+      type: 'assessment/fetch',
+    });
+    dispatch({
       type: 'user/show',
       payload: this.props.match.params.id,
     });
     dispatch({
       type: 'plan/user',
       payload: this.props.match.params.id,　　
-    });
-    dispatch({
-      type: 'assessment/fetch',
     });
   }
 
@@ -74,24 +75,16 @@ export default class UserShow extends PureComponent {
 
   handlePreview = file => {
     this.setState({
-      previewImage: file.url || file.thumbUrl,
       previewVisible: true,
+      previewImage: file.url || file.thumbUrl,
     });
   };
 
   render() {
-    const {
-      user: { data },
-      task,
-      plan,
-      assessment,
-      dispatch,
-      match,
-    } = this.props;
+    const { user: { data }, task, plan, assessment, dispatch, match } = this.props;
     const { previewVisible, previewImage } = this.state;
     let scheduleTime = '';
     let imageList = [];
-    
     
     if (data.list[0].image) {
       let list = data.list[0].image;
@@ -200,7 +193,6 @@ export default class UserShow extends PureComponent {
     }
 
     function phone(value) {
-      // 139-4093-2459
       var newNumber= value.substr(0, 3) + "-" + value.substr(3, 4) + "-" + value.substr(6, 10);
       return newNumber;
     }  
@@ -295,10 +287,6 @@ export default class UserShow extends PureComponent {
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                   <img alt="example" style={{ width: '100%' }} src={previewImage} />
                 </Modal>
-                {/* <Avatar
-                  size="large"
-                  src="G:\\service-api\\public\\image\\a9507a1a1f96620a0ebeb03530044de1"
-                /> */}
               </Card>
             </TabPane>
           </Tabs>

@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Card, Button, Form, Col, Row, Input, Select, Divider, Slider } from 'antd';
 import { connect } from 'dva';
-import FooterToolbar from 'components/FooterToolbar';
+import { Card, Button, Form, Col, Row, Input, Select, Divider, Slider } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import TableForm from './TableForm';
+import FooterToolbar from 'components/FooterToolbar';
 import styles from './PlanEdit.less';
+import TableForm from './TableForm';
 import { Link } from 'dva/router';
 import moment from 'moment';
 const { Option } = Select;
@@ -30,7 +30,7 @@ const dementiaList = {
   6: 'ⅣM',
 };
 
-@connect(({ plan, template, role, loading }) => ({
+@connect(({ plan, role, template, loading }) => ({
   plan,
   role,
   template,
@@ -48,6 +48,12 @@ export default class PlanEdit extends PureComponent {
       type: 'plan/show',
       payload: this.props.match.params.id,
     });
+    dispatch({
+      type: 'template/fetch',
+    });
+    dispatch({
+      type: 'role/fetch',
+    });       
   }
 
   componentWillUnmount() {
@@ -108,32 +114,27 @@ export default class PlanEdit extends PureComponent {
         }
       }
     }
-
-    // 計画作成者
-    let planAuthor = [];
-    // 介護認定
-    let certification = [];
-    // 管理者
-    let admin = [];
-    // 看護
-    let nursing = [];
-    // 介護
-    let nursingCare = [];
-    // 相談員
-    let counselor = [];    
-    // 機能訓練
-    let functionalTraining = [];        
-
+    
+    // admin一覧
+    let adminData = [];
     role.data.list.map((item,) => {
-      planAuthor.push(<Option key={item._id}>{item.adminName}</Option>);
-      certification.push(<Option key={item._id}>{item.adminName}</Option>);
-      admin.push(<Option key={item._id}>{item.adminName}</Option>);
-      nursing.push(<Option key={item._id}>{item.adminName}</Option>);
-      nursingCare.push(<Option key={item._id}>{item.adminName}</Option>);
-      counselor.push(<Option key={item._id}>{item.adminName}</Option>);
-      functionalTraining.push(<Option key={item._id}>{item.adminName}</Option>);             
+      adminData.push(<Option key={item._id}>{item.adminName}</Option>);
     }); 
-
+        // // 計画作成者
+        // let planAuthor = adminData;
+        // // 介護認定
+        // let certification = adminData;
+        // // 管理者
+        // let admin = adminData;
+        // // 看護
+        // let nursing = adminData;
+        // // 介護
+        // let nursingCare = adminData;
+        // // 相談員
+        // let counselor = adminData;    
+        // // 機能訓練
+        // let functionalTraining = adminData;        
+    
 
     function handleChange(value) {
       console.log(`selected ${value}`);
@@ -173,7 +174,7 @@ export default class PlanEdit extends PureComponent {
                       initialValue: moment(parameter.createDate).format('YYYY-MM-DD'),
                       rules: [{ required: true, message: '作成日入力してください' }],
                     })(
-                      <Input type="Date" placeholder="入力してください" disabled />
+                      <Input type="Date" placeholder="作成日" disabled />
                     )}
                   </Form.Item>
                 </Col>
@@ -183,7 +184,7 @@ export default class PlanEdit extends PureComponent {
                       initialValue: moment(parameter.createLastTime).format('YYYY-MM-DD'),
                       rules: [{ required: true, message: '前回作成日入力してください' }],
                     })(
-                      <Input type="Date" placeholder="入力してください" disabled />
+                      <Input type="Date" placeholder="前回作成日" disabled />
                     )}
                   </Form.Item>
                 </Col>
@@ -194,9 +195,8 @@ export default class PlanEdit extends PureComponent {
                       rules: [{ required: true, message: '計画作成者入力してください' }],
                     })(
                       <Select disabled style={{ width: '100%' }} onChange={handleChange} >
-                        {planAuthor}
-                      </Select>
-                    )}
+                        {adminData}
+                      </Select>  )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -208,9 +208,8 @@ export default class PlanEdit extends PureComponent {
                       rules: [{ required: true, message: '介護認定入力してください' }],
                     })(
                       <Select disabled style={{ width: '100%' }} onChange={handleChange} >
-                        {certification}
-                      </Select>
-                    )}
+                        {adminData}
+                      </Select>  )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -220,9 +219,8 @@ export default class PlanEdit extends PureComponent {
                       rules: [{ required: true, message: '管理者入力してください' }],
                     })(
                       <Select disabled style={{ width: '100%' }} onChange={handleChange} >
-                        {admin}
-                      </Select>
-                    )}
+                        {adminData}
+                      </Select>  )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
@@ -231,10 +229,9 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.nursing._id,
                       rules: [{ required: true, message: '看護入力してください' }],
                     })(
-                    <Select disabled style={{ width: '100%' }} onChange={handleChange} >
-                      {nursing}
-                    </Select>
-                    )}
+                      <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                        {adminData}
+                      </Select>  )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -245,10 +242,9 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.nursingCare._id,
                       rules: [{ required: true, message: '介護入力してください' }],
                     })(
-                    <Select disabled style={{ width: '100%' }} onChange={handleChange} >
-                      {nursingCare}
-                    </Select>                    
-                    )}
+                      <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                        {adminData}
+                      </Select>  )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -257,11 +253,9 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.functionalTraining._id,
                       rules: [{ required: true, message: '機能訓練入力してください' }],
                     })(
-                    // <Input placeholder="入力してください" disabled />
-                    <Select disabled style={{ width: '100%' }} onChange={handleChange} >
-                      {functionalTraining}
-                    </Select>                    
-                    )}
+                      <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                        {adminData}
+                      </Select>  )}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
@@ -270,10 +264,9 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.counselor._id,
                       rules: [{ required: true, message: '相談員入力してください' }],
                     })(
-                    <Select disabled style={{ width: '100%' }} onChange={handleChange} >
-                      {counselor}
-                    </Select>                       
-                    )}
+                      <Select disabled style={{ width: '100%' }} onChange={handleChange} >
+                        {adminData}
+                      </Select>  )}
                   </Form.Item>
                 </Col>
               </Row>
@@ -283,7 +276,7 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('oneselfDesire', {
                       initialValue: parameter.oneselfDesire,
                       rules: [{ required: true, message: '本人の希望入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(<Input placeholder="本人の希望" />)}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -291,7 +284,7 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('familyDesire', {
                       initialValue: parameter.familyDesire,
                       rules: [{ required: true, message: '家族の希望入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(<Input placeholder="家族の希望" />)}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
@@ -299,7 +292,7 @@ export default class PlanEdit extends PureComponent {
                     {getFieldDecorator('disorder', {
                       initialValue: parameter.disorder,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Slider marks={disorderList} max={8} step={null} defaultValue={0} />)}
+                    })(<Slider marks={disorderList} max={8} step={null} initialValue={0} />)}
                   </Form.Item>
                 </Col>
               </Row>
@@ -309,7 +302,7 @@ export default class PlanEdit extends PureComponent {
                     {getFieldDecorator('dementia', {
                       initialValue: parameter.dementia,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Slider marks={dementiaList} max={6} step={null} defaultValue={0} />)}
+                    })(<Slider marks={dementiaList} max={6} step={null} initialValue={0} />)}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -318,7 +311,8 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.diseaseName,
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                      <Select mode="multiple" style={{ width: '100%' }} onChange={handleChange} >
+                      <Select mode="multiple" style={{ width: '100%' }}
+                        placeholder="病名、合併症(心疾患、吸器疾患等)" onChange={handleChange} >
                         {diseaseName}
                       </Select>
                     )}
@@ -333,7 +327,8 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.exerciseRisk,
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                      <Select mode="multiple" style={{ width: '100%' }} onChange={handleChange} >
+                      <Select mode="multiple" style={{ width: '100%' }}
+                        placeholder="運動時のリスク(血圧、不整脈、呼吸等)" onChange={handleChange} >
                         {exerciseRisk}
                       </Select>
                     )}
@@ -346,7 +341,7 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('lifeIssues', {
                       initialValue: parameter.lifeIssues,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(<Input placeholder="生活課題" />)}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 6, offset: 2 }} lg={{ span: 8 }} md={{ span: 12 }} sm={24}>
@@ -354,7 +349,7 @@ export default class PlanEdit extends PureComponent {
                     {form.getFieldDecorator('homeEnvironment', {
                       initialValue: parameter.homeEnvironment,
                       rules: [{ required: true, message: '入力してください' }],
-                    })(<Input placeholder="入力してください" />)}
+                    })(<Input placeholder="在宅環境" />)}
                   </Form.Item>
                 </Col>
                 <Col xl={{ span: 8, offset: 2 }} lg={{ span: 10 }} md={{ span: 24 }} sm={24}>
@@ -369,7 +364,6 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.additionalTraining.longTermGoals,
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                    // <Input type="Date" placeholder="長期目標" />
                     <Select placeholder="目標期間">
                       <Option value="3">3ヵ月</Option>
                       <Option value="6">6ヵ月</Option>
@@ -407,7 +401,6 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.additionalTraining.shortTermGoals,
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                    // <Input type="Date" placeholder="短期目標" />
                     <Select placeholder="目標期間">
                       <Option value="3">3ヵ月</Option>
                       <Option value="6">6ヵ月</Option>
@@ -466,7 +459,6 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.planTow.longTermGoals,
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                    // <Input type="Date" placeholder="長期目標" />
                     <Select placeholder="目標期間">
                       <Option value="3">3ヵ月</Option>
                       <Option value="6">6ヵ月</Option>
@@ -504,7 +496,6 @@ export default class PlanEdit extends PureComponent {
                       initialValue: parameter.planTow.shortTermGoals,
                       rules: [{ required: true, message: '入力してください' }],
                     })(
-                    // <Input type="Date" placeholder="短期目標" />
                     <Select placeholder="目標期間">
                       <Option value="3">3ヵ月</Option>
                       <Option value="6">6ヵ月</Option>
