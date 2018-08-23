@@ -34,23 +34,37 @@ exports.printTicketTemplate = async (ticket) => {
   }
   const data = await readFileP(template_path);
   const t = new xlsxTemplate(data);
+
+  function enumList(data) {
+    let value = {
+      programContent : "",
+      attention : "",
+      frequency : "",
+      time : "",
+      personLiable : "",
+    };
+    if (typeof data !== 'undefined') {
+      value = data;
+    }
+    return value;
+  }
+
   
   if (form_data.pattern === "plan") {
-
     t.substitute(1, {
       createDate: moment(form_data.createDate).format('YYYY-MM-DD'), // 作成日
       createLastTime: moment(form_data.createLastTime).format('YYYY-MM-DD'), // 前回作成日
-      planAuthor: form_data.planAuthor, // 計画作成者
+      planAuthor: form_data.planAuthor.adminName, // 計画作成者
       userName: form_data.user.name, // 氏名
       userPhonetic: form_data.user.phonetic, // ふりがな
       userSex: form_data.user.sex, // 性別
       userBirth: moment(form_data.user.birth).format('YYYY-MM-DD'), // 生年月日
-      certification: form_data.certification, // 介護認定
-      admin: form_data.admin, // 管理者
-      nursing: form_data.nursing, // 看護
-      nursingCare: form_data.nursingCare, // 介護
-      functionalTraining: form_data.functionalTraining, // 機能訓練
-      counselor: form_data.counselor, // 相談員
+      certification: form_data.certification.adminName, // 介護認定
+      admin: form_data.admin.adminName, // 管理者
+      nursing: form_data.nursing.adminName, // 看護
+      nursingCare: form_data.nursingCare.adminName, // 介護
+      functionalTraining: form_data.functionalTraining.adminName, // 機能訓練
+      counselor: form_data.counselor.adminName, // 相談員
       oneselfDesire: form_data.oneselfDesire, // 本人の希望
       familyDesire: form_data.familyDesire, // 家族の希望
       disorder: form_data.disorder, // 障害老人の日常生活自立度
@@ -67,12 +81,27 @@ exports.printTicketTemplate = async (ticket) => {
       add_shortTermGoals: form_data.additionalTraining.shortTermGoals, // 短期目標
       add_shortCalculation: form_data.additionalTraining.shortCalculation, // 短期算定
       add_shortTermGoalsDegree: form_data.additionalTraining.shortTermGoalsDegree, // 目標逹成度
+      
+      // // NO.1
+      add_enum_1_programContent: enumList(form_data.additionalTraining.enum[0]).programContent, // プログラム内容
+      add_enum_1_attention: enumList(form_data.additionalTraining.enum[0]).attention, // 留意点
+      add_enum_1_frequency: enumList(form_data.additionalTraining.enum[0]).frequency, // 頻度
+      add_enum_1_time: enumList(form_data.additionalTraining.enum[0]).time, // 時間
+      add_enum_1_personLiable: enumList(form_data.additionalTraining.enum[0]).personLiable, // 主な実施者
 
-      // add_enum_programContent: form_data.add_enum_programContent, // プログラム内容
-      // add_enum_attention: form_data.add_enum_attention, // 留意点
-      // add_enum_frequency: form_data.add_enum_frequency, // 頻度
-      // add_enum_time: form_data.add_enum_time, // 時間
-      // add_enum_personLiable: form_data.add_enum_personLiable, // 主な実施者
+      // NO.2
+      add_enum_2_programContent: enumList(form_data.additionalTraining.enum[1]).programContent, // プログラム内容
+      add_enum_2_attention: enumList(form_data.additionalTraining.enum[1]).attention, // 留意点
+      add_enum_2_frequency: enumList(form_data.additionalTraining.enum[1]).frequency, // 頻度
+      add_enum_2_time: enumList(form_data.additionalTraining.enum[1]).time, // 時間
+      add_enum_2_personLiable: enumList(form_data.additionalTraining.enum[1]).personLiable, // 主な実施者
+      
+      // NO.3
+      add_enum_3_programContent: enumList(form_data.additionalTraining.enum[2]).programContent, // プログラム内容
+      add_enum_3_attention: enumList(form_data.additionalTraining.enum[2]).attention, // 留意点
+      add_enum_3_frequency: enumList(form_data.additionalTraining.enum[2]).frequency, // 頻度
+      add_enum_3_time: enumList(form_data.additionalTraining.enum[2]).time, // 時間
+      add_enum_3_personLiable: enumList(form_data.additionalTraining.enum[2]).personLiable, // 主な実施者  
 
       add_mastermind: form_data.additionalTraining.mastermind, // プログラム立案者
 
@@ -84,11 +113,33 @@ exports.printTicketTemplate = async (ticket) => {
       plan_shortCalculation: form_data.planTow.shortCalculation, // 短期算定
       plan_shortTermGoalsDegree: form_data.planTow.shortTermGoalsDegree, // 目標逹成度
 
-      // plan_enum_programContent: form_data.plan_enum_programContent, // プログラム内容
-      // plan_enum_attention: form_data.plan_enum_attention, // 留意点
-      // plan_enum_frequency: form_data.plan_enum_frequency, // 頻度
-      // plan_enum_time: form_data.plan_enum_time, // 時間
-      // plan_enum_personLiable: form_data.plan_enum_personLiable, // 主な実施者
+      // // NO.1
+      plan_enum_1_programContent: enumList(form_data.planTow.enum[0]).programContent, // プログラム内容
+      plan_enum_1_attention: enumList(form_data.planTow.enum[0]).attention, // 留意点
+      plan_enum_1_frequency: enumList(form_data.planTow.enum[0]).frequency, // 頻度
+      plan_enum_1_time: enumList(form_data.planTow.enum[0]).time, // 時間
+      plan_enum_1_personLiable: enumList(form_data.planTow.enum[0]).personLiable, // 主な実施者
+
+      // NO.2
+      plan_enum_2_programContent: enumList(form_data.planTow.enum[1]).programContent, // プログラム内容
+      plan_enum_2_attention: enumList(form_data.planTow.enum[1]).attention, // 留意点
+      plan_enum_2_frequency: enumList(form_data.planTow.enum[1]).frequency, // 頻度
+      plan_enum_2_time: enumList(form_data.planTow.enum[1]).time, // 時間
+      plan_enum_2_personLiable: enumList(form_data.planTow.enum[1]).personLiable, // 主な実施者
+      
+      // NO.3
+      plan_enum_3_programContent: enumList(form_data.planTow.enum[2]).programContent, // プログラム内容
+      plan_enum_3_attention: enumList(form_data.planTow.enum[2]).attention, // 留意点
+      plan_enum_3_frequency: enumList(form_data.planTow.enum[2]).frequency, // 頻度
+      plan_enum_3_time: enumList(form_data.planTow.enum[2]).time, // 時間
+      plan_enum_3_personLiable: enumList(form_data.planTow.enum[2]).personLiable, // 主な実施者
+
+      // NO.4
+      plan_enum_4_programContent: enumList(form_data.planTow.enum[3]).programContent, // プログラム内容
+      plan_enum_4_attention: enumList(form_data.planTow.enum[3]).attention, // 留意点
+      plan_enum_4_frequency: enumList(form_data.planTow.enum[3]).frequency, // 頻度
+      plan_enum_4_time: enumList(form_data.planTow.enum[3]).time, // 時間
+      plan_enum_4_personLiable: enumList(form_data.planTow.enum[3]).personLiable, // 主な実施者          
 
       plan_mastermind: form_data.planTow.mastermind, // プログラム立案者
 

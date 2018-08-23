@@ -152,6 +152,10 @@ export default class PlanShow extends PureComponent {
                       {parameter[0].dementia}
                     </p>
                     <p>
+                      <b>病名、合併症(心疾患、吸器疾患等):</b>
+                      {parameter[0].diseaseName}
+                    </p>                    
+                    <p>
                       <b>運動時のリスク(血圧、不整脈、呼吸等):</b>
                       {parameter[0].exerciseRisk}
                     </p>

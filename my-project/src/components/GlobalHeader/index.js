@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
-import { Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider, Tooltip } from 'antd';
+import { Menu, Icon, Tag, Dropdown, Avatar, Divider, Spin, Tooltip } from 'antd';
 import moment from 'moment';
+import { Link } from 'dva/router';
+import styles from './index.less';
 import groupBy from 'lodash/groupBy';
 import Debounce from 'lodash-decorators/debounce';
-import { Link } from 'dva/router';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
-import styles from './index.less';
 
 export default class GlobalHeader extends PureComponent {
   componentWillUnmount() {
@@ -57,14 +57,14 @@ export default class GlobalHeader extends PureComponent {
   }
   render() {
     const {
-      currentUser = {},
-      collapsed,
-      fetchingNotices,
-      isMobile,
       logo,
-      onNoticeVisibleChange,
+      isMobile,
+      collapsed,
       onMenuClick,
       onNoticeClear,
+      fetchingNotices,
+      currentUser = {},
+      onNoticeVisibleChange,
     } = this.props;
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>

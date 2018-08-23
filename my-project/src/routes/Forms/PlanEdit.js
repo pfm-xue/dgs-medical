@@ -119,22 +119,7 @@ export default class PlanEdit extends PureComponent {
     let adminData = [];
     role.data.list.map((item,) => {
       adminData.push(<Option key={item._id}>{item.adminName}</Option>);
-    }); 
-        // // 計画作成者
-        // let planAuthor = adminData;
-        // // 介護認定
-        // let certification = adminData;
-        // // 管理者
-        // let admin = adminData;
-        // // 看護
-        // let nursing = adminData;
-        // // 介護
-        // let nursingCare = adminData;
-        // // 相談員
-        // let counselor = adminData;    
-        // // 機能訓練
-        // let functionalTraining = adminData;        
-    
+    });    
 
     function handleChange(value) {
       console.log(`selected ${value}`);

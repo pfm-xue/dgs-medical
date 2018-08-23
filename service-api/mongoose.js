@@ -83,6 +83,7 @@ const planSchema = mongoose.Schema({
     shortCalculation: String,// 短期算定
     shortTermGoalsDegree: String,// 目標逹成度
     enum: [{
+      key: String,           // 唯一の鍵
       programContent: String,// プログラム内容
       attention: String,// 留意点
       frequency: String,// 頻度
