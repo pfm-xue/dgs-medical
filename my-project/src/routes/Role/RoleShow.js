@@ -5,6 +5,7 @@ import {
   DatePicker,
   Tabs,
   Button,
+  List,
   Calendar,
   Icon,
   Form,
@@ -113,17 +114,9 @@ export default class RoleShow extends PureComponent {
   handleChange = ({ fileList }) => this.setState({ fileList });
 
   render() {
-    const { task, role: { data }, dispatch, match } = this.props;
-    const { previewVisible, previewImage, fileList, modalVisible } = this.state;
+    const { task, role, dispatch, match } = this.props;
+    const { modalVisible } = this.state;
     let scheduleTime = '';
-    const roleDate = data.list[0];
-
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
 
     const parentMethods = {
       handleAddTask: this.handleAddTask,
@@ -186,7 +179,7 @@ export default class RoleShow extends PureComponent {
       list.map(item => {
         const executeTime = moment(item.executeTime).format('YYYY-MM-DD');
         const valueTime = moment(value._d).format('YYYY-MM-DD');
-        if (executeTime === valueTime 
+        if (executeTime === valueTime
           // && item.task_admin._id === id
         ) {
           data = item;
@@ -213,55 +206,36 @@ export default class RoleShow extends PureComponent {
     }
 
     function phone(value) {
-      // 139-4093-2459
       var newNumber= value.substr(0, 3) + "-" + value.substr(3, 4) + "-" + value.substr(6, 10);
       return newNumber;
-    }  
+    }
 
-    return roleDate && (
+    return (
       <PageHeaderLayout title="管理者詳細情報">
         <Card style={{ marginBottom: 24 }} title="管理者情報" bordered={false}>
-          <DescriptionList
-            // loading={roleLoading}
-            size="large" title="" style={{ marginBottom: 32 }}>
-            <Description term="名前">{roleDate.adminName}</Description>
-            <Description term="職務">{roleDate.post}</Description>
-            <Description term="role">{roleDate.role}</Description>
-            <Description term="電話番号">
-            {phone(roleDate.telephoneNumber)}
-            </Description>
-            <Description term="Email">{roleDate.email}</Description>
-            <Description term="アドレス">{roleDate.address}</Description>
-          </DescriptionList>
+        <List
+          grid={{ gutter: 16, column: 4 }}
+          dataSource={role.data.list}
+          renderItem={item => (
+            <DescriptionList size="large" title="" style={{ marginBottom: 32 }}>
+              <Description term="名前">{item.adminName}</Description>
+              <Description term="職務">{item.post}</Description>
+              <Description term="role">{item.role}</Description>
+              <Description term="電話番号">{phone(item.telephoneNumber)}</Description>
+              <Description term="Email">{item.email}</Description>
+              <Description term="アドレス">{item.address}</Description>
+            </DescriptionList>
+          )}
+        />
         </Card>
         <Card bodyStyle={{ padding: 0 }} bordered={false} title="">
           <Tabs>
             {/*スケジュール*/}
             <TabPane tab="スケジュール" key="assessment">
               <Card title="" style={{ marginBottom: 24 }} bordered={false}>
-                {/* <Button type="primary" icon="plus" onClick={() => this.handleModalVisible(true)}>
-                  新規
-                </Button> */}
                 <br />
                 <br />
                 <Calendar dateCellRender={dateCellRender} />
-              </Card>
-            </TabPane>
-            {/*画像*/}
-            <TabPane tab="画像" key="record">
-              <Card title="" style={{ marginBottom: 24 }} bordered={false}>
-                <Upload
-                  action="//jsonplaceholder.typicode.com/posts/"
-                  listType="picture-card"
-                  fileList={fileList}
-                  onPreview={this.handlePreview}
-                  onChange={this.handleChange}
-                >
-                  {uploadButton}
-                </Upload>
-                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                  <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                </Modal>
               </Card>
             </TabPane>
           </Tabs>

@@ -1,4 +1,4 @@
-import { userShow } from '../services/api';
+import { userShow, roleShow } from '../services/api';
 
 export default {
   namespace: 'show',
@@ -17,6 +17,13 @@ export default {
         payload: response,
       });
     },
+    *role({ payload }, { call, put }) {
+      const response = yield call(roleShow, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+    },    
   },
   reducers: {
     save(state, action) {

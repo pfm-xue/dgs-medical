@@ -4,6 +4,7 @@ import {
   Card,
   Tabs,
   Icon,
+  List,
   Form,
   Modal,
   Button,
@@ -81,13 +82,13 @@ export default class UserShow extends PureComponent {
   };
 
   render() {
-    const { user: { data }, task, plan, assessment, dispatch, match } = this.props;
+    const { user, task, plan, assessment, dispatch, match } = this.props;
     const { previewVisible, previewImage } = this.state;
     let scheduleTime = '';
     let imageList = [];
     
-    if (data.list[0].image) {
-      let list = data.list[0].image;
+    if (user.data.list.length > 0) {
+      let list = user.data.list[0].image;
       for (let i = 0; i < list.length; i += 1) {
         let image = {};
         image = {
@@ -200,24 +201,25 @@ export default class UserShow extends PureComponent {
     return (
       <PageHeaderLayout title="利用者詳細情報">
         <Card style={{ marginBottom: 24 }} title="利用者情報" bordered={false}>
-          { data.list && (
+
+        <List
+          grid={{ gutter: 16, column: 4 }}
+          dataSource={user.data.list}
+          renderItem={item => (
             <DescriptionList
               size="large"
               title=""
               style={{ marginBottom: 32 }}
             >
-              <Description term="利用者氏名">{data.list[0].name}</Description>
-              <Description term="ふりがな">{data.list[0].phonetic}</Description>
-              <Description term="生年月日">
-                {moment(data.list[0].birth).format('YYYY-MM-DD')}
-              </Description>
-              <Description term="性別">{data.list[0].sex}</Description>
-              <Description term="電話番号">
-                {phone(data.list[0].telephoneNumber)}
-              </Description>
-              <Description term="住所">{data.list[0].address}</Description>
-            </DescriptionList>
+              <Description term="利用者氏名">{item.name}</Description>
+              <Description term="ふりがな">{item.phonetic}</Description>
+              <Description term="生年月日">{moment(item.birth).format('YYYY-MM-DD')}</Description>
+              <Description term="性別">{item.sex}</Description>
+              <Description term="電話番号">{phone(item.telephoneNumber)}</Description>
+              <Description term="住所">{item.address}</Description>
+            </DescriptionList>            
           )}
+        />          
         </Card>
         <Card bodyStyle={{ padding: 0 }} bordered={false} title="">
           <Tabs>

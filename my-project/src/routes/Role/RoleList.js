@@ -1,5 +1,5 @@
-import React, { PureComponent, Fragment } from 'react';
 import { routerRedux } from 'dva/router';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Form, Input, Select, Button, Modal, Popconfirm, Divider, Table } from 'antd';
 // import StandardTable from 'components/StandardTable';
@@ -173,7 +173,6 @@ export default class RoleList extends PureComponent {
       modalVisible: false,
       modalVisible1: false,
     });
-    // location.reload();
   };
 
   renderSimpleForm() {
