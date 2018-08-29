@@ -108,7 +108,10 @@ router.post('/search/', async (req, res, next) => {
     } 
     
     list = await mdb.User.find(search).sort('-_id');
-    
+
+    console.log("+++++++++++++++++++++++++++++++++++++++++ Search +++++++++++++++++++++++++++++++++++++++++");
+    console.log(list);
+
     res.json({
       list: list,
       pagination: {

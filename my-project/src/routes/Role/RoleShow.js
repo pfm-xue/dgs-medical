@@ -2,26 +2,21 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
   Card,
-  DatePicker,
   Tabs,
-  Button,
   List,
-  Calendar,
-  Icon,
   Form,
   Modal,
   Input,
   message,
-  Upload,
+  Calendar,
+  DatePicker,
 } from 'antd';
-import DescriptionList from 'components/DescriptionList';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-const { Description } = DescriptionList;
+const { TabPane } = Tabs;
 import moment from 'moment';
 const FormItem = Form.Item;
-const { TabPane } = Tabs;
-import styles from './RoleShow.less';
-import { Link } from 'dva/router';
+const { Description } = DescriptionList;
+import DescriptionList from 'components/DescriptionList';
+import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAddTask, handleModalVisible } = props;
@@ -64,11 +59,11 @@ const CreateForm = Form.create()(props => {
 @Form.create()
 export default class RoleShow extends PureComponent {
   state = {
-    modalVisible1: false,
-    modalVisible: false,
-    expandForm: false,
-    selectedRows: [],
     formValues: {},
+    selectedRows: [],
+    expandForm: false,
+    modalVisible: false,
+    modalVisible1: false,
   };
 
   componentDidMount() {
@@ -174,14 +169,11 @@ export default class RoleShow extends PureComponent {
 
     function getListData(value) {
       const list = task.data.list;
-      const id = match.params.id;
       let data;
       list.map(item => {
         const executeTime = moment(item.executeTime).format('YYYY-MM-DD');
         const valueTime = moment(value._d).format('YYYY-MM-DD');
-        if (executeTime === valueTime
-          // && item.task_admin._id === id
-        ) {
+        if (executeTime === valueTime) {
           data = item;
         }
       });
@@ -217,7 +209,7 @@ export default class RoleShow extends PureComponent {
           grid={{ gutter: 16, column: 4 }}
           dataSource={role.data.list}
           renderItem={item => (
-            <DescriptionList size="large" title="" style={{ marginBottom: 32 }}>
+            <DescriptionList size="large" style={{ marginBottom: 32 }}>
               <Description term="名前">{item.adminName}</Description>
               <Description term="職務">{item.post}</Description>
               <Description term="role">{item.role}</Description>

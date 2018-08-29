@@ -201,25 +201,20 @@ export default class UserShow extends PureComponent {
     return (
       <PageHeaderLayout title="利用者詳細情報">
         <Card style={{ marginBottom: 24 }} title="利用者情報" bordered={false}>
-
         <List
           grid={{ gutter: 16, column: 4 }}
           dataSource={user.data.list}
           renderItem={item => (
-            <DescriptionList
-              size="large"
-              title=""
-              style={{ marginBottom: 32 }}
-            >
+            <DescriptionList size="large" style={{ marginBottom: 32 }}>
               <Description term="利用者氏名">{item.name}</Description>
               <Description term="ふりがな">{item.phonetic}</Description>
               <Description term="生年月日">{moment(item.birth).format('YYYY-MM-DD')}</Description>
               <Description term="性別">{item.sex}</Description>
               <Description term="電話番号">{phone(item.telephoneNumber)}</Description>
               <Description term="住所">{item.address}</Description>
-            </DescriptionList>            
+            </DescriptionList>
           )}
-        />          
+        />
         </Card>
         <Card bodyStyle={{ padding: 0 }} bordered={false} title="">
           <Tabs>
@@ -231,34 +226,34 @@ export default class UserShow extends PureComponent {
                     新規
                   </Button>
                 </Link>
-                <br />
-                <br />
-                  {plan.data.list.map(item => (
-                    <Card.Grid
-                      className={styles.gridStyle}>
-                      <p>作成日:{moment(item.createDate).format('YYYY-MM-DD')}</p>
-                      <p>計画作成者:{item.planAuthor.adminName}</p>
-                      <p>管理者:{item.admin.adminName}</p>
-                      <p>利用者:{item.user.name}</p>
-                      <p>特記事項:{item.specialNotes}</p>
-                      <p className={styles.center} >
-                      <Link to={'/profile/plan-show/' + item._id}>
-                        <Icon type="printer" /> プレビュー
-                      </Link>
-                      <Icon type="pause" />
-                      <Link to={'/form/plan-edit/' + item._id}>
-                        <Icon type="edit" /> 編集
-                      </Link>
-                      </p>
-                    </Card.Grid>
-                  ))}
+                <br/>
+                <br/>
+                {plan.data.list.map(item => (
+                  <Card.Grid
+                    className={styles.gridStyle}>
+                    <p>作成日:{moment(item.createDate).format('YYYY-MM-DD')}</p>
+                    <p>計画作成者:{item.planAuthor.adminName}</p>
+                    <p>管理者:{item.admin.adminName}</p>
+                    <p>利用者:{item.user.name}</p>
+                    <p>特記事項:{item.specialNotes}</p>
+                    <p className={styles.center}>
+                    <Link to={'/profile/plan-show/' + item._id}>
+                      <Icon type="printer"/> プレビュー
+                    </Link>
+                    <Icon type="pause"/>
+                    <Link to={'/form/plan-edit/' + item._id}>
+                      <Icon type="edit"/> 編集
+                    </Link>
+                    </p>
+                  </Card.Grid>
+                ))}
               </Card>
             </TabPane>
             {/*スケジュール*/}
             <TabPane tab="スケジュール" key="schedule">
               <Card title="" style={{ marginBottom: 24 }} bordered={false}>
-                <br />
-                <br />
+                <br/>
+                <br/>
                 <Calendar dateCellRender={dateCellRender} />
               </Card>
             </TabPane>

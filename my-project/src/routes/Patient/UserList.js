@@ -18,15 +18,12 @@ import {
   Popconfirm,
   DatePicker,
 } from 'antd';
-import { Link } from 'dva/router';
-import { REMOTE_URL } from '../../utils/utils';
-// import StandardTable from 'components/StandardTable';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
-import styles from './UserList.less';
-
-const FormItem = Form.Item;
 const { Option } = Select;
+const FormItem = Form.Item;
+import { Link } from 'dva/router';
+import styles from './UserList.less';
+import { REMOTE_URL } from '../../utils/utils';
+import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 // 利用者 新建
 const CreateForm = Form.create()(props => {
@@ -112,18 +109,12 @@ export default class UserList extends PureComponent {
     this.setState({
       formValues: {},
     });
-    // dispatch({
-    //   type: 'user/fetch',
-    //   payload: {},
-    // });
   };
 
   handleMenuClick = e => {
     const { dispatch } = this.props;
     const { selectedRows } = this.state;
-
     if (!selectedRows) return;
-
     switch (e.key) {
       case 'remove':
         dispatch({
@@ -281,7 +272,6 @@ export default class UserList extends PureComponent {
         }
       },
     };
-    
 
     // 利用者 编辑
     const CreateForm1 = Form.create()(props => {
