@@ -232,6 +232,16 @@ export async function fakeAccountLogin(params) {
   });
 }
 
+export async function removeUser(params) {
+  return request(`${REMOTE_URL}/mp/user/delete/`, {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
+
 export async function fakeRegister(params) {
   return request('/api/register', {
     method: 'POST',

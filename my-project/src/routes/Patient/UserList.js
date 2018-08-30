@@ -15,6 +15,7 @@ import {
   Button,
   message,
   Divider,
+  Checkbox,
   Popconfirm,
   DatePicker,
 } from 'antd';
@@ -92,6 +93,7 @@ export default class UserList extends PureComponent {
     modalVisible: false,
     expandForm: false,
     selectedRows: [],
+    idListDelete: [],
     formValues: {},
     userData: '',
   };
@@ -180,6 +182,26 @@ export default class UserList extends PureComponent {
     });
   };
 
+  onChange = record => {
+    const { idListDelete } = this.state;
+    let newList = idListDelete;
+    let number = newList.indexOf(record);
+    if (number < 0) {
+      newList.push(record);
+    } else {
+      let list = [];
+      for (let i = 0; i < newList.length; i++ ) {
+        if (newList[i] !== record ) {
+          list.push(newList[i]);
+        }
+      }
+      newList = list;
+    }
+    this.setState({
+      idListDelete: newList,
+    });
+  };
+
   handleCancel = () => {
     this.setState({
       modalVisible1: false,
@@ -239,6 +261,20 @@ export default class UserList extends PureComponent {
     return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
   }
 
+  delete = () => {
+    const { idListDelete } = this.state;
+    const { dispatch } = this.props;
+    if (idListDelete.length > 0) {
+      dispatch({
+        type: 'user/remove',
+        payload: {
+          fields: idListDelete,
+        },
+      });
+    }
+    message.success(<p>{idListDelete.length}本を削除する</p>);
+  }
+
   onClick = () => {
     let fields = {printing: true};
     this.props.dispatch({
@@ -251,10 +287,10 @@ export default class UserList extends PureComponent {
     message.success(
       <a href={`${REMOTE_URL}/excel/利用者List.DAT`} download="利用者List.DAT">「利用者List.DAT」出力成功。  ダウンロード</a>
     );
-  };
+  }
 
   render() {
-    const { user: { data }, loading } = this.props;
+    const { user: { data } } = this.props;
     const { modalVisible, modalVisible1, userData } = this.state;
 
     const props = {
@@ -347,6 +383,11 @@ export default class UserList extends PureComponent {
 
     const columns = [
       {
+        title: '',
+        dataIndex: '_id',
+        render: record => <Fragment><Checkbox onChange={() => this.onChange(record)}></Checkbox></Fragment>,
+      },      
+      {
         title: '利用者氏名',
         dataIndex: 'name',
       },
@@ -406,7 +447,7 @@ export default class UserList extends PureComponent {
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                 新規
               </Button>
-              <Popconfirm title="これを削除しますか？">
+              <Popconfirm title="これを削除しますか？" onConfirm={this.delete} >
                 <Button icon="delete" type="danger">
                   削除
                 </Button>

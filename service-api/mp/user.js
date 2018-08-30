@@ -81,6 +81,32 @@ router.delete('/:user_id', async (req, res, next) => {
   });
 });
 
+router.post('/delete/', async (req, res, next) => {
+  // check manager
+  await checkManager(req);
+
+  //TODO: 频度，数量的限制
+  console.log("++++++++++++++++++++++ Delete-Start ++++++++++++++++++++++");
+  console.log(req.body.fields);
+
+  let idList = req.body.fields;
+  for (i = 0; i < idList.length; i++) {
+    console.log("++++++++++ Id" + i + " ++++++++++");
+    console.log(idList[i]);
+    await mdb.User.findByIdAndRemove(idList[i]);
+  }
+
+  console.log("++++++++++++++++++++++++++ Delete-End ++++++++++++++++++++++++++");
+  let list;
+  list = await mdb.User.find().sort('-_id');
+
+  res.json({
+    list: list,
+    pagination: {
+    },
+  });
+});
+
 router.post('/search/', async (req, res, next) => {
   // check manager
   await checkManager(req);

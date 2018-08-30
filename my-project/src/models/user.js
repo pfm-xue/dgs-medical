@@ -1,4 +1,4 @@
-import { queryUser, showUser, searchUser, addUser } from '../services/api';
+import { queryUser, showUser, searchUser, addUser, removeUser } from '../services/api';
 
 export default {
   namespace: 'user',
