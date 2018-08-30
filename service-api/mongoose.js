@@ -232,7 +232,7 @@ const assessmentSchema = mongoose.Schema({
 const taskSchema = mongoose.Schema({
   executeTime: Date,            // 実行時間
   arrivalTime: Date,            // 到着時間
-    // 関連使用者
+    // 関連利用者
   task_user: {
     ref: 'User',
     type: mongoose.Schema.Types.ObjectId,

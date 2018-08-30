@@ -249,7 +249,7 @@ export default class UserList extends PureComponent {
     });
 
     message.success(
-      <a href="/使用者List.DAT" download="使用者List.DAT">「使用者List.DAT」出力成功。  ダウンロード</a>
+      <a href={`${REMOTE_URL}/excel/利用者List.DAT`} download="利用者List.DAT">「利用者List.DAT」出力成功。  ダウンロード</a>
     );
   };
 

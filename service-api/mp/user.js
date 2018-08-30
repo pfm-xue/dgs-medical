@@ -146,7 +146,7 @@ router.post('/', async (req, res, next) => {
     const list = await mdb.User.find()
     .sort('-_id');
     // CSV出力
-      const fileName = '使用者List.DAT';
+      const fileName = '利用者List.DAT';
 
       const lsi = _.join(
         _.map(list, (user) => {
@@ -164,7 +164,7 @@ router.post('/', async (req, res, next) => {
       );
       
       const content = `${'利用者氏名,ふりがな,生年月日,性別,電話番号,アドレス'}\n${lsi}`;   
-      const csv_file = path.join('/my-project/public/', fileName);
+      const csv_file = path.join(__dirname, '..', '/public/excel/', fileName);
       await fs.writeFile(csv_file, content);
   } else {
     //TODO: 频度，数量的限制
