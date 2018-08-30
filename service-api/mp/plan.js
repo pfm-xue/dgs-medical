@@ -177,7 +177,7 @@ router.post('/', async (req, res, next) => {
         let plan;
         if (req.body.planData._id) {
           const data = req.body.planData;
-      
+
           plan = await mdb.Plan.findByIdAndUpdate(req.body.planData._id, data, {
             new: true,
           });

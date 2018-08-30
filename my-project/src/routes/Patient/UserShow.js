@@ -218,9 +218,9 @@ export default class UserShow extends PureComponent {
         </Card>
         <Card bodyStyle={{ padding: 0 }} bordered={false} title="">
           <Tabs>
-            {/*スケジュール*/}
+            {/*計画書*/}
             <TabPane tab="計画書" key="plan">
-              <Card title="" style={{ marginBottom: 24 }} bordered={false}>
+              <Card style={{ marginBottom: 24 }} bordered={false}>
                 <Link to= {'/form/advanced-form/' + this.props.match.params.id} >
                   <Button type="primary" icon="plus">
                     新規
@@ -251,7 +251,7 @@ export default class UserShow extends PureComponent {
             </TabPane>
             {/*スケジュール*/}
             <TabPane tab="スケジュール" key="schedule">
-              <Card title="" style={{ marginBottom: 24 }} bordered={false}>
+              <Card style={{ marginBottom: 24 }} bordered={false}>
                 <br/>
                 <br/>
                 <Calendar dateCellRender={dateCellRender} />
@@ -259,7 +259,7 @@ export default class UserShow extends PureComponent {
             </TabPane>
             {/*アセスメント*/}
             <TabPane tab="アセスメント" key="assessment">
-                <Card title="" style={{ marginBottom: 24 }} bordered={false}>
+                <Card style={{ marginBottom: 24 }} bordered={false}>
                 {assessment.data.list.map(item => (
                     <Card.Grid
                       className={styles.gridStyle}>
@@ -275,7 +275,7 @@ export default class UserShow extends PureComponent {
             </TabPane>
             {/*画像*/}
             <TabPane tab="画像" key="record">
-              <Card title="" style={{ marginBottom: 24 }} bordered={false}>
+              <Card style={{ marginBottom: 24 }} bordered={false}>
                 <Upload {...props}>
                   <Button>
                     <Icon type="upload" /> Upload

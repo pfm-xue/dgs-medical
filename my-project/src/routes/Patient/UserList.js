@@ -207,13 +207,13 @@ export default class UserList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="利用者氏名">
-              {getFieldDecorator('name')(<Input placeholder="入力してください" />)}
+              {getFieldDecorator('name')(<Input placeholder="利用者氏名" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="性別">
               {getFieldDecorator('sex')(
-                <Select placeholder="選択してください" style={{ width: '100%' }}>
+                <Select placeholder="性別" style={{ width: '100%' }}>
                   <Option value="男">男</Option>
                   <Option value="女">女</Option>
                 </Select>

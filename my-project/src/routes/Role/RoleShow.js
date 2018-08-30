@@ -145,7 +145,7 @@ export default class RoleShow extends PureComponent {
         },
         content: (
           <div>
-            <Card title="" style={{ marginBottom: 24 }} bordered={false}>
+            <Card style={{ marginBottom: 24 }} bordered={false}>
               <FormItem label="タスク予定時間">
                 {
                   <DatePicker
@@ -220,11 +220,11 @@ export default class RoleShow extends PureComponent {
           )}
         />
         </Card>
-        <Card bodyStyle={{ padding: 0 }} bordered={false} title="">
+        <Card bodyStyle={{ padding: 0 }} bordered={false}>
           <Tabs>
             {/*スケジュール*/}
             <TabPane tab="スケジュール" key="assessment">
-              <Card title="" style={{ marginBottom: 24 }} bordered={false}>
+              <Card style={{ marginBottom: 24 }} bordered={false}>
                 <br />
                 <br />
                 <Calendar dateCellRender={dateCellRender} />

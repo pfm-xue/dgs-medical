@@ -93,9 +93,13 @@ router.post('/search/', async (req, res, next) => {
     if (!name || !sex) {
       search = {
         $or: [{
-          name: name,
+          name: {
+            $regex: `.*${name}.*`
+          },
         }, {
-          sex: sex,
+          sex: {
+            $regex: `.*${sex}.*`
+          },
         },
         ],
       };
@@ -103,7 +107,9 @@ router.post('/search/', async (req, res, next) => {
     if (name && sex ) {
       search = {
         name: name,
-        sex: sex,
+        sex: {
+          $regex: `.*${sex}.*`
+        },
       }
     } 
     
@@ -165,7 +171,6 @@ router.post('/', async (req, res, next) => {
     let user;
     if (req.body.fields._id) {
       const data = req.body.fields;
-  
       user = await mdb.User.findByIdAndUpdate(req.body.fields._id, data, {
         new: true,
       });

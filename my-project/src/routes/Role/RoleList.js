@@ -182,13 +182,13 @@ export default class RoleList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="管理者名前">
-              {getFieldDecorator('adminName')(<Input placeholder="入力してください" />)}
+              {getFieldDecorator('adminName')(<Input placeholder="管理者名前" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="role">
               {getFieldDecorator('role')(
-                <Select placeholder="選択してください" style={{ width: '100%' }}>
+                <Select placeholder="role" style={{ width: '100%' }}>
                   <Option value="介護士">介護士</Option>
                   <Option value="施設内システム管理者">施設内システム管理者</Option>
                   <Option value="看護師">看護師</Option>
